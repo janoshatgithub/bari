@@ -1,0 +1,76 @@
+body {
+    margin:0; padding:0;
+    font-family:times;
+}
+
+div {
+    margin:0; padding:0; /* Remove space between elements */
+}
+
+#container {
+    margin-left:auto; margin-right:auto;  /* Center block level content */
+    width:800px;
+}
+
+#header {
+    text-align: center;  /* Center inline Content - Don't work in IE'*/
+    width:100%;
+}
+
+#content {
+    width:100%;
+    padding-left:10px; padding-right:10px;
+}
+
+#error {
+    text-align: center;
+    color: red;
+}
+
+#main {
+    width:100%;
+}
+
+/* Table layout */
+table.pageablelistview {
+	margin-bottom: 10px;
+	border-bottom: 1px solid;
+	}
+table.pageablelistview caption {
+    text-align: left;
+}
+table.pageablelistview tr {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+table.pageablelistview trtable.pageablelistview caption {
+    text-align: left;
+}.even {
+    background-color: #ececec;
+}
+table.pageablelistview tr.odd {
+    background-color: #fff;
+}
+table.pageablelistview tr td {
+    padding-left: 8px; padding-right: 30px;
+}
+table.pageablelistview tr th {
+    color: black;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 30px;
+    background-color: #ececec;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+table.pageablelistview tr th {
+    background-position: right;
+    background-repeat:no-repeat;
+}
+table.pageablelistview tr th a {
+    font-weight: normal;
+}

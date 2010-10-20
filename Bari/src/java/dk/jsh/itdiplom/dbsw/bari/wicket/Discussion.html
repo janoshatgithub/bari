@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Discussion</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<wicket:extend>
+<fieldset>
+    <legend>Diskussion</legend>
+    <table align="center" border="0">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <b><span wicket:id="type">Fejl</span>:&nbsp;
+                        <span wicket:id="title">Overskrift</span></b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea wicket:id="log" name="" rows="20" cols="90"
+                              readonly="readonly">
+                    </textarea>
+                </td>
+            </tr>
+ 
+        </tbody>
+    </table>
+    <form action="#" wicket:id="form">
+        <table align="center" border="0">
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <b>Nyt indlæg:</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:120px">Bruger:</td>
+                    <td>
+                        <input wicket:id="user" type="text" name="" value=""
+                               size="50" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Indlæg:</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea wicket:id="message" name=""
+                                  rows="5" cols="80">
+                        </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" >
+                        <a href="#" wicket:id="goBack">Tilbage</a>
+                        <div style="float:right">
+                            <input wicket:id="save" type="submit"
+                                   value="Gem nyt indlæg" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</fieldset>
+</wicket:extend>
+</body>
+</html>
