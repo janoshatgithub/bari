@@ -119,4 +119,41 @@ public class Constants {
             return INPRODUCTION;
         }
     }
+
+     /**
+     * BaRI user role: ADMIN, DEVELOPER, NORMAL.
+     */
+    public enum UserRole {
+        ADMIN("Administrator"),
+        DEVELOPER("Udvikler"),
+        NORMAL("Alm. bruger");
+
+        private String name;
+
+        UserRole(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public static List<String> getNames() {
+            List<String> names = new ArrayList<String>();
+            names.add(ADMIN.name);
+            names.add(DEVELOPER.name);
+            names.add(NORMAL.name);
+            return names;
+        }
+
+        public static UserRole getName(String name) {
+            if (ADMIN.name.equals(name)) {
+                return ADMIN;
+            }
+            else if (DEVELOPER.name.equals(name)) {
+                return DEVELOPER;
+            }
+            return NORMAL;
+        }
+     }
 }
