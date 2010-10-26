@@ -20,7 +20,7 @@ public class CreateNewTest {
     public void TestRequiredFields() {
         WicketTester wt = new WicketTester();
         BariUser bariUser = new BariUser("login", "password", "Bruger navn",
-                "email");
+                Constants.UserRole.NORMAL);
         CreateNew createNew = new CreateNew(bariUser);
         wt.startPage(createNew);
         wt.assertLabel("error", ""); //No errors yet
