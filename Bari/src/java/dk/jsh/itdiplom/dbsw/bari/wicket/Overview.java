@@ -3,6 +3,7 @@ package dk.jsh.itdiplom.dbsw.bari.wicket;
 import dk.jsh.itdiplom.dbsw.bari.bussiness.BariCaseBusiness;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
+import dk.jsh.itdiplom.dbsw.bari.domain.Constants;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.CaseStatus;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.Type;
 import java.util.LinkedList;
@@ -31,7 +32,8 @@ public final class Overview extends BasePage {
 
     //TODO: Should be deleted after autentication is implemented.
     public Overview() {
-        this(new BariUser("login", "password", "fullname", "email"),
+        this(new BariUser("login", "password", "fullname", 
+                Constants.UserRole.NORMAL),
                 Type.ERROR, "Alle");
     }
     
