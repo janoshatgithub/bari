@@ -4,6 +4,8 @@
 
     drop table BariCase;
 
+    drop table BariUser;
+
     drop table DiscussionMessage;
 
     create table BariCase (
@@ -17,6 +19,16 @@
         finished timestamp,
         title varchar(255),
         type varchar(255),
+        version integer,
+        primary key (id)
+    );
+
+    create table BariUser (
+        id bigint not null generated always as identity,
+        fullname varchar(50) not null,
+        login varchar(20) not null,
+        password varchar(20) not null,
+        userRole varchar(10) not null,
         version integer,
         primary key (id)
     );
