@@ -23,7 +23,6 @@ public class Application extends WebApplication {
      */
     @Override
     public Class getHomePage() {
-        //return Overview.class;
         return Login.class;
     }
 

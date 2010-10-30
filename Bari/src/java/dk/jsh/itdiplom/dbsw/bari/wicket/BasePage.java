@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.resources.StyleSheetReference;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 /** 
@@ -26,6 +27,11 @@ public abstract class BasePage extends WebPage {
      * Constructor
      */
     public BasePage() {
+        BariSession bariSession = BariSession.get();
+        bariUser = bariSession.getBariUser();
+        add(new Label("userandrole", new Model(bariUser.getFullname() + " som "
+                + bariUser.getUserRole().getName())));
+
         PropertyModel errorMessageModel =
                 new PropertyModel(this, "errorMessage");
         add(new Label("error", errorMessageModel));
@@ -60,7 +66,9 @@ public abstract class BasePage extends WebPage {
         add(new Link("logout") {
             @Override
             public void onClick() {
-                Page page = new About();
+                BariSession bariSession = BariSession.get();
+                bariSession.setBariUser(null);
+                Page page = new Login();
                 setResponsePage(page);
             }
 
