@@ -37,6 +37,11 @@ public abstract class BasePage extends WebPage {
                 Page page = new CreateNew(bariUser);
                 setResponsePage(page);
             }
+
+            @Override
+            public boolean isEnabled() {
+                return BariSession.get().isAuthenticated();
+            }
         });
 
         add(new Link("overview") {
@@ -44,6 +49,24 @@ public abstract class BasePage extends WebPage {
             public void onClick() {
                 Page page = new Overview(bariUser, Type.ERROR, "Alle");
                 setResponsePage(page);
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return BariSession.get().isAuthenticated();
+            }
+        });
+
+        add(new Link("logout") {
+            @Override
+            public void onClick() {
+                Page page = new About();
+                setResponsePage(page);
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return BariSession.get().isAuthenticated();
             }
         });
 
