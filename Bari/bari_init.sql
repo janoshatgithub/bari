@@ -1,4 +1,4 @@
--- Initialize database with som bari users
+-- Initialize database with some bari users.
 insert into bariuser
 (fullname, login, password, userrole, version)
 values ('Jan Schrøder Hansen', 'jsh', 'jsh', 'ADMIN', 1);
