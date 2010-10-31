@@ -1,6 +1,7 @@
 package dk.jsh.itdiplom.dbsw.bari.wicket;
 import dk.jsh.itdiplom.dbsw.bari.bussiness.DiscussionMessageBusiness;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
+import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
 import dk.jsh.itdiplom.dbsw.bari.domain.DiscussionMessage;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +42,7 @@ public final class Discussion extends BasePage {
             for (DiscussionMessage discussionMessage : discussionMessages) {
                 log.append(standardDateTimeFormat.format(discussionMessage.getCreated()));
                 log.append(" af ");
-                log.append(discussionMessage.getBariUser());
+                log.append(discussionMessage.getBariUser().getFullname());
                 log.append(":\n");
                 log.append(discussionMessage.getMessage());
                 log.append("\n\n");
@@ -58,15 +59,6 @@ public final class Discussion extends BasePage {
             @Override
             protected void onError() {
                 List<String> emptyFields = new ArrayList<String>();
-                if (!user.checkRequired()) {
-                    emptyFields.add("Bruger");
-                    user.add(new AttributeModifier("style", true,
-                            new Model("border-color:red;")));
-                }
-                else {
-                    user.add(new AttributeModifier("style", true,
-                            new Model("border-color:default;")));
-                }
                 if (!message.checkRequired()) {
                     emptyFields.add("Indlæg");
                     message.add(new AttributeModifier("style", true,
@@ -103,9 +95,6 @@ public final class Discussion extends BasePage {
         add(form);
 
         //Add fields to the form.
-        user = new TextField("user", new Model(""));
-        user.setRequired(true);
-        form.add(user);
         message = new TextArea("message", new Model(""));
         message.setRequired(true);
         form.add(message);
@@ -122,8 +111,9 @@ public final class Discussion extends BasePage {
         form.add(new Button("save") {
             @Override
             public void onSubmit() {
+                BariUser bariUser = BariSession.get().getBariUser();
                 DiscussionMessage discussionMessage = new DiscussionMessage(
-                        bariCase, new Date(), user.getModelObject(),
+                        bariCase, new Date(), bariUser,
                         message.getModelObject());
                 DiscussionMessageBusiness.saveNew(discussionMessage);
                 Page page = new Discussion(bariCase);

@@ -34,7 +34,7 @@ public final class Update extends BasePage {
     /**
      * Constructor.
      * 
-     * @param bariCase A BaRI user.
+     * @param bariCase A BaRI case.
      */
     public Update(final BariCase bariCase) {
         
@@ -106,7 +106,8 @@ public final class Update extends BasePage {
                 Type.getDescriptions());
         type.setRequired(true);
         form.add(type);
-        form.add(new TextField("user", new Model(bariCase.getBariUser())));
+        form.add(new TextField("user", 
+                new Model(bariCase.getBariUser().getFullname())));
         form.add(new TextField("created",
                 new Model(standardDateTimeFormat.format(bariCase.getCreated()))));
         form.add(new TextField("finished", 

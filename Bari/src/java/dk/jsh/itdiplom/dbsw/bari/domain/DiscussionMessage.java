@@ -17,19 +17,24 @@ public class DiscussionMessage implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     @Version
+    @Column(nullable = false)
     protected Integer version;
-    @ManyToOne
-    @org.hibernate.annotations.ForeignKey(name="fk_baricase")
+    @ManyToOne(optional=false)
+    @org.hibernate.annotations.ForeignKey(name="fk_from_discussionmessage_to_baricase")
     protected BariCase bariCase;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     protected Date created;
-    protected String bariUser;
+    @ManyToOne(optional=false)
+    @org.hibernate.annotations.ForeignKey(name="fk_from_discussiommessage_to_bariuser")
+    protected BariUser bariUser;
+    @Column(length=400, nullable = false)
     protected String message;
 
     public DiscussionMessage() {
     }
     
-    public DiscussionMessage(BariCase bariCase, Date created, String bariUser,
+    public DiscussionMessage(BariCase bariCase, Date created, BariUser bariUser,
             String message) {
         this.bariCase = bariCase;
         this.created = created;
@@ -37,11 +42,11 @@ public class DiscussionMessage implements Serializable {
         this.message = message;
     }
 
-    public String getBariUser() {
+    public BariUser getBariUser() {
         return bariUser;
     }
 
-    public void setBariUser(String bariUser) {
+    public void setBariUser(BariUser bariUser) {
         this.bariUser = bariUser;
     }
 

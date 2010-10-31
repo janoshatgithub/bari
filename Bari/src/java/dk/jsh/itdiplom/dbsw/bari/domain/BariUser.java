@@ -17,6 +17,7 @@ public class BariUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     @Version
+    @Column(nullable = false)
     protected Integer version;
     @Column(length=20, nullable = false)
     protected String login;

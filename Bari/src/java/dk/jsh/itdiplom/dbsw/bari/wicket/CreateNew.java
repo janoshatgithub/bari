@@ -26,7 +26,6 @@ import org.apache.wicket.validation.validator.StringValidator;
 public final class CreateNew extends BasePage {
     private TextField<String> title;
     private DropDownChoice<String> type;
-    private TextField<String> user;
     private TextArea<String> description;
 
     /**
@@ -57,15 +56,6 @@ public final class CreateNew extends BasePage {
                 }
                 else {
                     type.add(new AttributeModifier("style", true,
-                            new Model("border-color:default;")));
-                }
-                if (!user.checkRequired()) {
-                    emptyFields.add("Oprettet af");
-                    user.add(new AttributeModifier("style", true,
-                            new Model("border-color:red;")));
-                }
-                else {
-                    user.add(new AttributeModifier("style", true,
                             new Model("border-color:default;")));
                 }
                 if (!description.checkRequired()) {
@@ -125,9 +115,6 @@ public final class CreateNew extends BasePage {
                 new Model(Type.ERROR.getDescription()), Type.getDescriptions());
         type.setRequired(true);
         form.add(type);
-        user = new TextField("user", new Model(""));
-        user.setRequired(true);
-        form.add(user);
         description = new TextArea("description", new Model(""));
         description.setRequired(true);
         description.add(StringValidator.maximumLength(255));
@@ -143,10 +130,11 @@ public final class CreateNew extends BasePage {
         form.add(new Button("save") {
             @Override
             public void onSubmit() {
+                BariUser bariUser = BariSession.get().getBariUser();
                 BariCase bariCase = new BariCase(
                         title.getModelObject(),
                         Type.getType(type.getModelObject()),
-                        user.getModelObject(),
+                        bariUser,
                         new Date(), null, CaseStatus.NEW,
                         DevStatus.NOTSTARTED,
                         description.getModelObject(),

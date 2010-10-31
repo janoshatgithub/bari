@@ -20,26 +20,36 @@ public class BariCase implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     @Version
+    @Column(nullable = false)
     protected Integer version;
+    @Column(length=50, nullable = false)
     protected String title;
     @Enumerated(EnumType.STRING)
+    @Column(length=10, nullable = false)
     protected Type type;
-    protected String bariUser;
+    @ManyToOne(optional=false)
+    @org.hibernate.annotations.ForeignKey(name="fk_from_baricase_to_bariuser")
+    protected BariUser bariUser;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     protected Date created;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date finished;
     @Enumerated(EnumType.STRING)
+    @Column(length=15, nullable = false)
     protected CaseStatus caseStatus;
     @Enumerated(EnumType.STRING)
+    @Column(length=15, nullable = false)
     protected DevStatus devStatus;
+    @Column(length=400, nullable = false)
     protected String description;
+    @Column(length=400)
     protected String conclusion;
 
     public BariCase() {
     }
 
-    public BariCase(String title, Type type, String bariUser, Date created,
+    public BariCase(String title, Type type, BariUser bariUser, Date created,
             Date finished, CaseStatus caseStatus, DevStatus devStatus,
             String description, String conclusion) {
         this.title = title;
@@ -81,11 +91,11 @@ public class BariCase implements Serializable {
         this.type = type;
     }
 
-    public String getBariUser() {
+    public BariUser getBariUser() {
         return bariUser;
     }
 
-    public void setBariUser(String bariUser) {
+    public void setBariUser(BariUser bariUser) {
         this.bariUser = bariUser;
     }
 
