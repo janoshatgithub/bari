@@ -1,0 +1,16 @@
+ Disken i drev C er BOOT
+ Diskens serienummer er 6C4D-E0D3
+
+ Indhold af C:\GoogleCode\bari\doc\DB Design
+
+01-11-2010  20:10    <DIR>          .
+01-11-2010  20:10    <DIR>          ..
+31-10-2010  19:10             6.423 ER Diagram.dia
+31-10-2010  18:37             6.403 ER Diagram.dia~
+31-10-2010  19:10            62.410 ER Diagram.wmf
+31-10-2010  19:10             2.951 RI Diagram.dia
+31-10-2010  19:02             2.951 RI Diagram.dia~
+31-10-2010  19:10            65.676 RI Diagram.wmf
+01-11-2010  20:10                 0 sletmig.txt
+               7 fil(er)          146.814 byte
+               2 mappe(r)  20.222.238.720 byte ledig
