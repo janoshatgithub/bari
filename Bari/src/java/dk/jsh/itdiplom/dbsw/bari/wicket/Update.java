@@ -2,9 +2,11 @@ package dk.jsh.itdiplom.dbsw.bari.wicket;
 
 import dk.jsh.itdiplom.dbsw.bari.bussiness.BariCaseBusiness;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
+import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.CaseStatus;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.DevStatus;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.Type;
+import dk.jsh.itdiplom.dbsw.bari.domain.Constants.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.AttributeModifier;
@@ -122,6 +124,14 @@ public final class Update extends BasePage {
                 new Model(bariCase.getDevStatus().getDescription()),
                 DevStatus.getDescriptions());
         devStatus.setRequired(true);
+
+        //Only ADMIN and DEVELOPER can change dev. status.
+        BariSession bariSession = BariSession.get();
+        BariUser currentBariUser = bariSession.getBariUser();
+        if (currentBariUser.getUserRole().equals(UserRole.NORMAL)) {
+            devStatus.setEnabled(false);
+        }
+        
         form.add(devStatus);
         description = new TextArea("description",
                 new Model(bariCase.getDescription())) ;

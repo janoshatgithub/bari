@@ -29,6 +29,10 @@ public abstract class BasePage extends WebPage {
     public BasePage() {
         BariSession bariSession = BariSession.get();
         bariUser = bariSession.getBariUser();
+        if (bariUser == null) {
+                Page loginPage = new Login();
+                this.setResponsePage(loginPage);
+        }
         add(new Label("userandrole", new Model(bariUser.getFullname() + " som "
                 + bariUser.getUserRole().getName())));
 
@@ -43,11 +47,6 @@ public abstract class BasePage extends WebPage {
                 Page page = new CreateNew(bariUser);
                 setResponsePage(page);
             }
-
-            @Override
-            public boolean isEnabled() {
-                return BariSession.get().isAuthenticated();
-            }
         });
 
         add(new Link("overview") {
@@ -55,11 +54,6 @@ public abstract class BasePage extends WebPage {
             public void onClick() {
                 Page page = new Overview(bariUser, Type.ERROR, "Alle");
                 setResponsePage(page);
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return BariSession.get().isAuthenticated();
             }
         });
 
@@ -70,11 +64,6 @@ public abstract class BasePage extends WebPage {
                 bariSession.setBariUser(null);
                 Page page = new Login();
                 setResponsePage(page);
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return BariSession.get().isAuthenticated();
             }
         });
 
