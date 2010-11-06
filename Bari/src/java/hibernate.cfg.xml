@@ -13,9 +13,12 @@
     <property name="hibernate.format_sql">true</property>
 
     <!-- List of annotated classes -->
+    <mapping class="dk.jsh.itdiplom.dbsw.bari.domain.Product" />
     <mapping class="dk.jsh.itdiplom.dbsw.bari.domain.BariUser" />
+    <mapping class="dk.jsh.itdiplom.dbsw.bari.domain.UserGroup" />
     <mapping class="dk.jsh.itdiplom.dbsw.bari.domain.BariCase" />
     <mapping class="dk.jsh.itdiplom.dbsw.bari.domain.DiscussionMessage" />
+
 
   </session-factory>
 </hibernate-configuration>

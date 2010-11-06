@@ -19,7 +19,7 @@ public class BariUser implements Serializable {
     @Version
     @Column(nullable = false)
     protected Integer version;
-    @Column(length=20, nullable = false)
+    @Column(length=20, nullable = false, unique=true)
     protected String login;
     @Column(length=20, nullable = false)
     protected String password;
@@ -38,6 +38,18 @@ public class BariUser implements Serializable {
         this.password = password;
         this.fullname = fullname;
         this.userRole = userRole;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 
     public String getFullname() {
