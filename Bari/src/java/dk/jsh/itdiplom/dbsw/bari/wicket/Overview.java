@@ -2,8 +2,6 @@ package dk.jsh.itdiplom.dbsw.bari.wicket;
 
 import dk.jsh.itdiplom.dbsw.bari.bussiness.BariCaseBusiness;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
-import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
-import dk.jsh.itdiplom.dbsw.bari.domain.Constants;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.CaseStatus;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.Type;
 import java.util.LinkedList;
@@ -30,23 +28,20 @@ public final class Overview extends BasePage {
     private DropDownChoice<String> dropDownChoiceType;
     private DropDownChoice<String> statusDownChoiceType;
 
-    //TODO: Should be deleted after autentication is implemented.
+    /**
+     * Constructor.
+     */
     public Overview() {
-        this(new BariUser("login", "password", "fullname", 
-                Constants.UserRole.NORMAL),
-                Type.ERROR, "Alle");
+        this(Type.ERROR, "Alle");
     }
-    
+
     /**
      * Constructor. 
      * 
-     * @param bariUser A BaRI user.
      * @param type Type used as default on overview page.
      * @param status Status uses as default on overview page.
      */
-    public Overview(final BariUser bariUser, Type type, String status) {
-        setBariUser(bariUser);
-
+    public Overview(Type type, String status) {
         //Add search form.
         Form form = new Form("form");
         add(form);
@@ -62,7 +57,7 @@ public final class Overview extends BasePage {
         form.add(new Button("search") {
             @Override
             public void onSubmit() {
-                Page page = new Overview(bariUser, 
+                Page page = new Overview( 
                         Type.getType(dropDownChoiceType.getModelObject()),
                         statusDownChoiceType.getModelObject());
                 setResponsePage(page);

@@ -44,7 +44,7 @@ public abstract class BasePage extends WebPage {
         add(new Link("createnew") {
             @Override
             public void onClick() {
-                Page page = new CreateNew(bariUser);
+                Page page = new CreateNew();
                 setResponsePage(page);
             }
         });
@@ -52,7 +52,7 @@ public abstract class BasePage extends WebPage {
         add(new Link("overview") {
             @Override
             public void onClick() {
-                Page page = new Overview(bariUser, Type.ERROR, "Alle");
+                Page page = new Overview(Type.ERROR, "Alle");
                 setResponsePage(page);
             }
         });
