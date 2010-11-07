@@ -2,6 +2,7 @@ package dk.jsh.itdiplom.wsp.bari.wicket.test;
 
 import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants;
+import dk.jsh.itdiplom.dbsw.bari.wicket.BariSession;
 import dk.jsh.itdiplom.dbsw.bari.wicket.CreateNew;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
@@ -21,7 +22,10 @@ public class CreateNewTest {
         WicketTester wt = new WicketTester();
         BariUser bariUser = new BariUser("login", "password", "Bruger navn",
                 Constants.UserRole.NORMAL);
-        CreateNew createNew = new CreateNew(bariUser);
+        BariSession bariSession = BariSession.get();
+                    bariSession.setBariUser(bariUser);
+
+        CreateNew createNew = new CreateNew();
         wt.startPage(createNew);
         wt.assertLabel("error", ""); //No errors yet
         wt.setParameterForNextRequest("form:title", "");
