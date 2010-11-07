@@ -1,5 +1,8 @@
 
     alter table BariCase 
+        drop constraint fk_from_baricase_to_product;
+
+    alter table BariCase 
         drop constraint fk_from_baricase_to_bariuser;
 
     alter table DiscussionMessage 
@@ -36,6 +39,7 @@
         type varchar(10) not null,
         version integer not null,
         bariUser_id bigint not null,
+        product_id bigint not null,
         primary key (id)
     );
 
@@ -74,6 +78,11 @@
         primary key (id),
         unique (bariUser_id, product_id)
     );
+
+    alter table BariCase 
+        add constraint fk_from_baricase_to_product 
+        foreign key (product_id) 
+        references Product;
 
     alter table BariCase 
         add constraint fk_from_baricase_to_bariuser 
