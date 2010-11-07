@@ -1,15 +1,19 @@
 package dk.jsh.itdiplom.dbsw.bari.wicket;
 
 import dk.jsh.itdiplom.dbsw.bari.bussiness.BariCaseBusiness;
+import dk.jsh.itdiplom.dbsw.bari.bussiness.UserGroupBusiness;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
+import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.CaseStatus;
 import dk.jsh.itdiplom.dbsw.bari.domain.Constants.Type;
+import dk.jsh.itdiplom.dbsw.bari.domain.Product;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
@@ -25,6 +29,8 @@ import org.apache.wicket.model.Model;
  * @author Jan S. Hansen
  */
 public final class Overview extends BasePage {
+    private DropDownChoice<Product> products;
+    private Product selectedProduct;
     private DropDownChoice<String> dropDownChoiceType;
     private DropDownChoice<String> statusDownChoiceType;
 
@@ -32,7 +38,7 @@ public final class Overview extends BasePage {
      * Constructor.
      */
     public Overview() {
-        this(Type.ERROR, "Alle");
+        this(null, Type.ERROR, "Alle");
     }
 
     /**
@@ -41,10 +47,25 @@ public final class Overview extends BasePage {
      * @param type Type used as default on overview page.
      * @param status Status uses as default on overview page.
      */
-    public Overview(Type type, String status) {
+    public Overview(Product product, Type type, String status) {
+        BariUser bariUser = BariSession.get().getBariUser();
+        List<Product> listOfProducts =
+                UserGroupBusiness.getAllDiscussionMessages(bariUser);
+        if (product == null) {
+            selectedProduct = listOfProducts.get(0);
+        }
+        else {
+            selectedProduct = product;
+        }
+
         //Add search form.
         Form form = new Form("form");
         add(form);
+        products = new DropDownChoice("product", new Model(selectedProduct),
+                listOfProducts, new ChoiceRenderer("name", "id"));
+        products.setRequired(true);
+        form.add(products);
+
         dropDownChoiceType = new DropDownChoice("type",
                 new Model(type.getDescription()), Type.getDescriptions());
         form.add(dropDownChoiceType);
@@ -57,7 +78,7 @@ public final class Overview extends BasePage {
         form.add(new Button("search") {
             @Override
             public void onSubmit() {
-                Page page = new Overview( 
+                Page page = new Overview(products.getModelObject(),
                         Type.getType(dropDownChoiceType.getModelObject()),
                         statusDownChoiceType.getModelObject());
                 setResponsePage(page);
@@ -69,7 +90,8 @@ public final class Overview extends BasePage {
         if (!"Alle".equals(statusDownChoiceType.getModelObject())) {
             cs = CaseStatus.getCaseStatus(statusDownChoiceType.getModelObject());
         }
-        List<BariCase> bariCases = BariCaseBusiness.getAllBariCases(type, cs);
+        List<BariCase> bariCases = BariCaseBusiness.getAllBariCases(selectedProduct,
+                type, cs);
         PageableListView pageableListView =
                 new PageableListView("pageable", bariCases, 10) {
             @Override

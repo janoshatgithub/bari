@@ -31,6 +31,7 @@ public final class Discussion extends BasePage {
      * @param bariCase A BaRI user.
      */
     public Discussion(final BariCase bariCase) {
+        add(new Label("product", new Model(bariCase.getProduct().getName())));
         add(new Label("type", new Model(bariCase.getType().getDescription())));
         add(new Label("title", new Model(bariCase.getTitle())));
 

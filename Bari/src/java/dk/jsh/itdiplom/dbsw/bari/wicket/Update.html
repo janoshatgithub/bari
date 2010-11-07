@@ -10,13 +10,23 @@
 <body>
 <wicket:extend>
 <fieldset>
-<legend>Vis/opdater</legend>
+<legend>Vis/ret</legend>
 <form action="#" wicket:id="form">
 <table align="center" border="0">
     <tbody>
         <tr>
             <td style="width:120px">Overskrift:</td>
-            <td><input wicket:id="title" type="text" name="" value="" size="50" /></td>
+            <td>
+                <input wicket:id="title" type="text"
+                       name="" value="" size="50" />
+            </td>
+        </tr>
+        <tr>
+            <td style="width:120px">Produkt:</td>
+            <td>
+                <input wicket:id="product" type="text"
+                       disabled="diabled" name="" value="" size="50" />
+            </td>
         </tr>
         <tr>
             <td>Type:</td>
@@ -60,7 +70,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td colspan="2"><textarea wicket:id="description" name="" rows="5" cols="80">
+            <td colspan="2"><textarea wicket:id="description" name="" rows="4" cols="80">
                 </textarea></td>
         </tr>
         <tr>
@@ -68,7 +78,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td colspan="2"><textarea wicket:id="conclusion" name="" rows="5" cols="80">
+            <td colspan="2"><textarea wicket:id="conclusion" name="" rows="4" cols="80">
                 </textarea></td>
         </tr>
         <tr>

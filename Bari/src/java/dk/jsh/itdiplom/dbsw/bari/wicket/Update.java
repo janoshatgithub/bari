@@ -27,6 +27,7 @@ import org.hibernate.StaleObjectStateException;
  */
 public final class Update extends BasePage {
     private TextField<String> title;
+    private TextField<String> product;
     private DropDownChoice<String> type;
     private DropDownChoice<String> caseStatus;
     private DropDownChoice<String> devStatus;
@@ -103,6 +104,9 @@ public final class Update extends BasePage {
         title = new TextField("title", new Model(bariCase.getTitle()));
         title.setRequired(true);
         form.add(title);
+        product = new TextField("product",
+                new Model(bariCase.getProduct().getName()));
+        form.add(product);
         type = new DropDownChoice("type", 
                 new Model(bariCase.getType().getDescription()),
                 Type.getDescriptions());

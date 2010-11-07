@@ -156,7 +156,7 @@ public final class CreateNew extends BasePage {
                 BariCase bariCase = new BariCase(
                         title.getModelObject(),
                         Type.getType(type.getModelObject()),
-                        bariUser,
+                        bariUser, products.getModelObject(),
                         new Date(), null, CaseStatus.NEW,
                         DevStatus.NOTSTARTED,
                         description.getModelObject(),

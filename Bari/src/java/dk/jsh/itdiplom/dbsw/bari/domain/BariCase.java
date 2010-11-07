@@ -30,6 +30,9 @@ public class BariCase implements Serializable {
     @ManyToOne(optional=false)
     @org.hibernate.annotations.ForeignKey(name="fk_from_baricase_to_bariuser")
     protected BariUser bariUser;
+    @ManyToOne(optional=false)
+    @org.hibernate.annotations.ForeignKey(name="fk_from_baricase_to_product")
+    protected Product product;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false)
     protected Date created;
@@ -49,12 +52,14 @@ public class BariCase implements Serializable {
     public BariCase() {
     }
 
-    public BariCase(String title, Type type, BariUser bariUser, Date created,
+    public BariCase(String title, Type type, BariUser bariUser,
+            Product product, Date created,
             Date finished, CaseStatus caseStatus, DevStatus devStatus,
             String description, String conclusion) {
         this.title = title;
         this.type = type;
         this.bariUser = bariUser;
+        this.product = product;
         this.created = created;
         this.finished = finished;
         this.caseStatus = caseStatus;
@@ -97,6 +102,14 @@ public class BariCase implements Serializable {
 
     public void setBariUser(BariUser bariUser) {
         this.bariUser = bariUser;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Date getCreated() {
