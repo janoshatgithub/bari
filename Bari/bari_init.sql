@@ -18,7 +18,7 @@ check (devstatus in ('NOTSTARTED', 'STARTED', 'READYTOTEST', 'TESTED',
 
 alter table baricase
 add constraint valid_case_stauts
-check (casestatus in ('NEW', 'CONSIDER', 'APPROVED', 'REJECTED',
+check (casestatus in ('NEW', 'CONSIDERING', 'APPROVED', 'REJECTED',
 'DONE'));
 
 -- Initialize database with some bari users.
