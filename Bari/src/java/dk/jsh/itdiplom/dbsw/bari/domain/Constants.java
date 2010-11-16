@@ -46,7 +46,7 @@ public class Constants {
      */
     public enum CaseStatus {
         NEW("Ny"),
-        CONSIDER("Behandles"),
+        CONSIDERING("Behandles"),
         APPROVED("Godkendt"),
         REJECTED("Afvist"),
         DONE("Afsluttet");
@@ -64,7 +64,7 @@ public class Constants {
         public static List<String> getDescriptions() {
             List<String> descriptions = new ArrayList<String>();
             descriptions.add(NEW.description);
-            descriptions.add(CONSIDER.description);
+            descriptions.add(CONSIDERING.description);
             descriptions.add(APPROVED.description);
             descriptions.add(REJECTED.description);
             descriptions.add(DONE.description);
@@ -73,7 +73,7 @@ public class Constants {
 
         public static CaseStatus getCaseStatus(String description) {
             if (NEW.description.equals(description)) return NEW;
-            if (CONSIDER.description.equals(description)) return CONSIDER;
+            if (CONSIDERING.description.equals(description)) return CONSIDERING;
             if (APPROVED.description.equals(description)) return APPROVED;
             if (DONE.description.equals(description)) return DONE;
             return REJECTED;
