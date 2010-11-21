@@ -1,4 +1,4 @@
-package dk.jsh.itdiplom.dbsw.bari.bussiness;
+package dk.jsh.itdiplom.dbsw.bari.business;
 
 import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
 import dk.jsh.itdiplom.dbsw.bari.domain.Product;

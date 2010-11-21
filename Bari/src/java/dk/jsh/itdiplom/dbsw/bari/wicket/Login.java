@@ -1,6 +1,6 @@
 package dk.jsh.itdiplom.dbsw.bari.wicket;
 
-import dk.jsh.itdiplom.dbsw.bari.bussiness.BariUserBusiness;
+import dk.jsh.itdiplom.dbsw.bari.business.BariUserBusiness;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
 import java.util.ArrayList;
 import java.util.List;

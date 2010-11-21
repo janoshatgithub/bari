@@ -1,5 +1,5 @@
 package dk.jsh.itdiplom.dbsw.bari.wicket;
-import dk.jsh.itdiplom.dbsw.bari.bussiness.DiscussionMessageBusiness;
+import dk.jsh.itdiplom.dbsw.bari.business.DiscussionMessageBusiness;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
 import dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
 import dk.jsh.itdiplom.dbsw.bari.domain.DiscussionMessage;

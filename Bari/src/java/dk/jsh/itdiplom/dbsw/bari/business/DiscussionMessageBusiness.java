@@ -1,4 +1,4 @@
-package dk.jsh.itdiplom.dbsw.bari.bussiness;
+package dk.jsh.itdiplom.dbsw.bari.business;
 
 import dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
 import dk.jsh.itdiplom.dbsw.bari.domain.DiscussionMessage;
