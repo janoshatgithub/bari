@@ -32,11 +32,11 @@ public class BariCaseBusiness {
     }
 
     /**
-     * Get all BariCase objects.
+     * Get all BariCase Eroor or Request objects for a product.
      *
-     * @param product product return BariCases to this product.
-     * @param type type of BariCases to return.
-     * @param caseStatus type of caseStatuses to return.
+     * @param product used in search.
+     * @param type used in search.
+     * @param caseStatus used in search, can be null.
      * @return a List of BariCase objects.
      */
     public static List<BariCase> getAllBariCases(Product product,

@@ -28,7 +28,7 @@ public final class Discussion extends BasePage {
     /**
      * Constructor.
      * 
-     * @param bariCase A BaRI user.
+     * @param bariCase A BaRICase.
      */
     public Discussion(final BariCase bariCase) {
         add(new Label("product", new Model(bariCase.getProduct().getName())));
@@ -41,7 +41,8 @@ public final class Discussion extends BasePage {
         if (discussionMessages.size() > 0) {
             StringBuilder log = new StringBuilder();
             for (DiscussionMessage discussionMessage : discussionMessages) {
-                log.append(standardDateTimeFormat.format(discussionMessage.getCreated()));
+                log.append(standardDateTimeFormat.format(
+                        discussionMessage.getCreated()));
                 log.append(" af ");
                 log.append(discussionMessage.getBariUser().getFullname());
                 log.append(":\n");
@@ -123,4 +124,3 @@ public final class Discussion extends BasePage {
       });
     }
 }
-

@@ -19,7 +19,6 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.StringValidator;
 
 /**
@@ -112,7 +111,8 @@ public final class CreateNew extends BasePage {
                     if (errorMessage.length() > 0) {
                         errorMessage.append(" ");
                     }
-                    errorMessage.append("Beskrivelses feltet kan max. være 255 tegn langt.");
+                    errorMessage.append("Beskrivelses feltet kan max. " +
+                            "være 255 tegn langt.");
                     description.add(new AttributeModifier("style", true,
                             new Model("border-color:red;")));
                 }

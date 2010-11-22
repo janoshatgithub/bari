@@ -32,6 +32,4 @@ public class BariSession extends WebSession {
     public void setBariUser(BariUser bariUser) {
         this.bariUser = bariUser;
     }
-
-
 }

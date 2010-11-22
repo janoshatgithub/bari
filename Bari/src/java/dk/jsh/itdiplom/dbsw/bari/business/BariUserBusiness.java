@@ -18,7 +18,7 @@ public class BariUserBusiness {
      * 
      * @param login bari user login
      * @param password password
-     * @return a BariUser or null if login or password is wrong
+     * @return a BariUser or null if login or password is wrong.
      */
     public static BariUser isValidUser(String login, String password) {
         BariUser bariUser = null;
@@ -35,7 +35,8 @@ public class BariUserBusiness {
             bariUser = bariUsers.get(0);
         }
         else if (bariUsers.size() > 1) {
-            throw new RuntimeException("More then one user with login " + login);
+            throw new RuntimeException("More then one user with login " +
+                    login);
         }
         session.close();
         return bariUser;

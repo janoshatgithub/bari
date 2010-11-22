@@ -44,6 +44,7 @@ public final class Overview extends BasePage {
     /**
      * Constructor. 
      * 
+     * @param product Product to use as default on overview page.
      * @param type Type used as default on overview page.
      * @param status Status uses as default on overview page.
      */

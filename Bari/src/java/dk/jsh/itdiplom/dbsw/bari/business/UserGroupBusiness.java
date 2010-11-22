@@ -28,7 +28,7 @@ public class UserGroupBusiness {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = "select product from "
                 + "dk.jsh.itdiplom.dbsw.bari.domain.Product product, "
-                + "dk.jsh.itdiplom.dbsw.bari.domain.UserGroup userGroup "
+                + "dk.jsh.itdiplom.dbsw.bari.domain.UserGroup userGroup " 
                 + "where userGroup.bariUser.id = :userid and "
                 + "product.id = userGroup.product.id "
                 + "order by product.name";
