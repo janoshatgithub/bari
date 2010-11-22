@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>CreateNew.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\src\java\dk\jsh\itdiplom\dbsw\bari\wicket\CreateNew.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.dbsw.bari.wicket;
+<span class="line-number">  2</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.business.BariCaseBusiness;
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.business.UserGroupBusiness;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Constants.CaseStatus;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Constants.DevStatus;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Constants.Type;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Product;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> java.util.ArrayList;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> org.apache.wicket.AttributeModifier;
+<span class="line-number"> 14</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Button;
+<span class="line-number"> 15</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.ChoiceRenderer;
+<span class="line-number"> 16</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.DropDownChoice;
+<span class="line-number"> 17</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Form;
+<span class="line-number"> 18</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.TextArea;
+<span class="line-number"> 19</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.TextField;
+<span class="line-number"> 20</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.link.Link;
+<span class="line-number"> 21</span> <span class="keyword-directive">import</span> org.apache.wicket.model.Model;
+<span class="line-number"> 22</span> <span class="keyword-directive">import</span> org.apache.wicket.validation.validator.StringValidator;
+<span class="line-number"> 23</span> 
+<span class="line-number"> 24</span> <span class="comment">/**</span>
+<span class="line-number"> 25</span> <span class="comment"> * </span><span class="comment">Create</span> <span class="comment">new</span> <span class="comment">BariCase</span> <span class="comment">page</span><span class="comment">.</span>
+<span class="line-number"> 26</span> <span class="comment"> *</span>
+<span class="line-number"> 27</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 28</span>  <span class="comment">*/</span>
+<span class="line-number"> 29</span> <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">class</span> CreateNew <span class="keyword-directive">extends</span> BasePage {
+<span class="line-number"> 30</span>     <span class="keyword-directive">private</span> TextField&lt;String&gt; title;
+<span class="line-number"> 31</span>     <span class="keyword-directive">private</span> DropDownChoice&lt;Product&gt; products;
+<span class="line-number"> 32</span>     <span class="keyword-directive">private</span> Product selectedProduct;
+<span class="line-number"> 33</span>     <span class="keyword-directive">private</span> DropDownChoice&lt;String&gt; type;
+<span class="line-number"> 34</span>     <span class="keyword-directive">private</span> TextArea&lt;String&gt; description;
+<span class="line-number"> 35</span> 
+<span class="line-number"> 36</span>     <span class="comment">/**</span>
+<span class="line-number"> 37</span> <span class="comment">     * </span><span class="comment">Constructor</span><span class="comment">.</span>
+<span class="line-number"> 38</span>      <span class="comment">*/</span>
+<span class="line-number"> 39</span>     <span class="keyword-directive">public</span> CreateNew() {
+<span class="line-number"> 40</span>         BariUser bariUser = BariSession.get().getBariUser();
+<span class="line-number"> 41</span>         List&lt;Product&gt; listOfProducts =
+<span class="line-number"> 42</span>                 UserGroupBusiness.getAllDiscussionMessages(bariUser);
+<span class="line-number"> 43</span>         selectedProduct = listOfProducts.get(0);
+<span class="line-number"> 44</span> 
+<span class="line-number"> 45</span>         <span class="comment">//Add a form as an inner class.</span>
+<span class="line-number"> 46</span>         Form form = <span class="keyword-directive">new</span> Form(<span class="character">&quot;</span><span class="character">form</span><span class="character">&quot;</span>) {
+<span class="line-number"> 47</span>             <span class="comment">//Handles required fields error.</span>
+<span class="line-number"> 48</span>             @Override
+<span class="line-number"> 49</span>             <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> onError() {
+<span class="line-number"> 50</span>                 List&lt;String&gt; emptyFields = <span class="keyword-directive">new</span> ArrayList&lt;String&gt;();
+<span class="line-number"> 51</span>                 <span class="keyword-directive">if</span> (!title.checkRequired()) {
+<span class="line-number"> 52</span>                     emptyFields.add(<span class="character">&quot;</span><span class="character">Overskrift</span><span class="character">&quot;</span>);
+<span class="line-number"> 53</span>                     title.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 54</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 55</span>                 }
+<span class="line-number"> 56</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 57</span>                     title.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 58</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 59</span>                 }
+<span class="line-number"> 60</span>                 <span class="keyword-directive">if</span> (!products.checkRequired()) {
+<span class="line-number"> 61</span>                     emptyFields.add(<span class="character">&quot;</span><span class="character">Produkt</span><span class="character">&quot;</span>);
+<span class="line-number"> 62</span>                     products.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 63</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 64</span>                 }
+<span class="line-number"> 65</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 66</span>                     products.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 67</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 68</span>                 }
+<span class="line-number"> 69</span>                 <span class="keyword-directive">if</span> (!type.checkRequired()) {
+<span class="line-number"> 70</span>                     emptyFields.add(<span class="character">&quot;</span><span class="character">Type</span><span class="character">&quot;</span>);
+<span class="line-number"> 71</span>                     type.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 72</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 73</span>                 }
+<span class="line-number"> 74</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 75</span>                     type.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 76</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:default;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 77</span>                 }
+<span class="line-number"> 78</span>                 <span class="keyword-directive">if</span> (!description.checkRequired()) {
+<span class="line-number"> 79</span>                     emptyFields.add(<span class="character">&quot;</span><span class="character">Beskrivelse</span><span class="character">&quot;</span>);
+<span class="line-number"> 80</span>                     description.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 81</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 82</span>                 }
+<span class="line-number"> 83</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number"> 84</span>                     description.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number"> 85</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:defalut;</span><span class="character">&quot;</span>)));
+<span class="line-number"> 86</span>                 }
+<span class="line-number"> 87</span>                 StringBuilder errorMessage = <span class="keyword-directive">new</span> StringBuilder();
+<span class="line-number"> 88</span>                 <span class="keyword-directive">if</span> (emptyFields.size() &gt; 0) {
+<span class="line-number"> 89</span>                     <span class="keyword-directive">if</span> (emptyFields.size() == 1) {
+<span class="line-number"> 90</span>                         errorMessage.append(<span class="character">&quot;</span><span class="character">Feltet </span><span class="character">&quot;</span>);
+<span class="line-number"> 91</span>                         errorMessage.append(<span class="character">&quot;</span><span class="character">&#39;</span><span class="character">&quot;</span>).append(emptyFields.get(0))
+<span class="line-number"> 92</span>                                 .append(<span class="character">&quot;</span><span class="character">&#39;</span><span class="character">&quot;</span>);
+<span class="line-number"> 93</span>                     }
+<span class="line-number"> 94</span>                     <span class="keyword-directive">else</span> {
+<span class="line-number"> 95</span>                         errorMessage.append(<span class="character">&quot;</span><span class="character">Felterne </span><span class="character">&quot;</span>);
+<span class="line-number"> 96</span>                         <span class="keyword-directive">int</span> fieldCounter = 1;
+<span class="line-number"> 97</span>                         <span class="keyword-directive">for</span> (String field : emptyFields) {
+<span class="line-number"> 98</span>                             errorMessage.append(<span class="character">&quot;</span><span class="character">&#39;</span><span class="character">&quot;</span>).append(field).append(<span class="character">&quot;</span><span class="character">&#39;</span><span class="character">&quot;</span>);
+<span class="line-number"> 99</span>                             <span class="keyword-directive">if</span> (fieldCounter &lt; emptyFields.size() -1) {
+<span class="line-number">100</span>                                 errorMessage.append(<span class="character">&quot;</span><span class="character">, </span><span class="character">&quot;</span>);
+<span class="line-number">101</span>                             }
+<span class="line-number">102</span>                             <span class="keyword-directive">if</span> (fieldCounter == emptyFields.size() -1) {
+<span class="line-number">103</span>                                 errorMessage.append(<span class="character">&quot;</span><span class="character"> og </span><span class="character">&quot;</span>);
+<span class="line-number">104</span>                             }
+<span class="line-number">105</span>                             fieldCounter++;
+<span class="line-number">106</span>                         }
+<span class="line-number">107</span>                     }
+<span class="line-number">108</span>                     errorMessage.append(<span class="character">&quot;</span><span class="character"> skal udfyldes.</span><span class="character">&quot;</span>);
+<span class="line-number">109</span>                 }
+<span class="line-number">110</span>                 <span class="keyword-directive">if</span> (!description.isValid()) {
+<span class="line-number">111</span>                     <span class="keyword-directive">if</span> (errorMessage.length() &gt; 0) {
+<span class="line-number">112</span>                         errorMessage.append(<span class="character">&quot;</span> <span class="character">&quot;</span>);
+<span class="line-number">113</span>                     }
+<span class="line-number">114</span>                     errorMessage.append(<span class="character">&quot;</span><span class="character">Beskrivelses feltet kan max. </span><span class="character">&quot;</span> +
+<span class="line-number">115</span>                             <span class="character">&quot;</span><span class="character">vær</span><span class="character">e 255 tegn langt.</span><span class="character">&quot;</span>);
+<span class="line-number">116</span>                     description.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">117</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:red</span><span class="character">;</span><span class="character">&quot;</span>)));
+<span class="line-number">118</span>                 }
+<span class="line-number">119</span>                 <span class="keyword-directive">else</span> {
+<span class="line-number">120</span>                     description.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">style</span><span class="character">&quot;</span>, <span class="keyword-directive">true</span>,
+<span class="line-number">121</span>                             <span class="keyword-directive">new</span> Model(<span class="character">&quot;</span><span class="character">border-color:defalut;</span><span class="character">&quot;</span>)));
+<span class="line-number">122</span>                 }
+<span class="line-number">123</span>                 setErrorMessage(errorMessage.toString());
+<span class="line-number">124</span>             }
+<span class="line-number">125</span>         };
+<span class="line-number">126</span>         add(form);
+<span class="line-number">127</span> 
+<span class="line-number">128</span>         <span class="comment">//Add fields to the form.</span>
+<span class="line-number">129</span>         title = <span class="keyword-directive">new</span> TextField(<span class="character">&quot;</span><span class="character">title</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">130</span>         title.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">131</span>         form.add(title);
+<span class="line-number">132</span>         products = <span class="keyword-directive">new</span> DropDownChoice(<span class="character">&quot;</span><span class="character">product</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(selectedProduct),
+<span class="line-number">133</span>                 listOfProducts, <span class="keyword-directive">new</span> ChoiceRenderer(<span class="character">&quot;</span><span class="character">name</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">id</span><span class="character">&quot;</span>));
+<span class="line-number">134</span>         products.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">135</span>         form.add(products);
+<span class="line-number">136</span>         type = <span class="keyword-directive">new</span> DropDownChoice(<span class="character">&quot;</span><span class="character">type</span><span class="character">&quot;</span>,
+<span class="line-number">137</span>                 <span class="keyword-directive">new</span> Model(Type.ERROR.getDescription()), Type.getDescriptions());
+<span class="line-number">138</span>         type.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">139</span>         form.add(type);
+<span class="line-number">140</span>         description = <span class="keyword-directive">new</span> TextArea(<span class="character">&quot;</span><span class="character">description</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(<span class="character">&quot;&quot;</span>));
+<span class="line-number">141</span>         description.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number">142</span>         description.add(StringValidator.maximumLength(255));
+<span class="line-number">143</span>         form.add(description);
+<span class="line-number">144</span> 
+<span class="line-number">145</span>         <span class="comment">//Add buttons to the form.</span>
+<span class="line-number">146</span>         form.add(<span class="keyword-directive">new</span> Link(<span class="character">&quot;</span><span class="character">cancel</span><span class="character">&quot;</span>) {
+<span class="line-number">147</span>             @Override
+<span class="line-number">148</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onClick() {
+<span class="line-number">149</span>                 setResponsePage(Overview.<span class="keyword-directive">class</span>);
+<span class="line-number">150</span>             }
+<span class="line-number">151</span>         });
+<span class="line-number">152</span>         form.add(<span class="keyword-directive">new</span> Button(<span class="character">&quot;</span><span class="character">save</span><span class="character">&quot;</span>) {
+<span class="line-number">153</span>             @Override
+<span class="line-number">154</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onSubmit() {
+<span class="line-number">155</span>                 BariUser bariUser = BariSession.get().getBariUser();
+<span class="line-number">156</span>                 BariCase bariCase = <span class="keyword-directive">new</span> BariCase(
+<span class="line-number">157</span>                         title.getModelObject(),
+<span class="line-number">158</span>                         Type.getType(type.getModelObject()),
+<span class="line-number">159</span>                         bariUser, products.getModelObject(),
+<span class="line-number">160</span>                         <span class="keyword-directive">new</span> Date(), <span class="keyword-directive">null</span>, CaseStatus.NEW,
+<span class="line-number">161</span>                         DevStatus.NOTSTARTED,
+<span class="line-number">162</span>                         description.getModelObject(),
+<span class="line-number">163</span>                         <span class="keyword-directive">null</span>);
+<span class="line-number">164</span>                 BariCaseBusiness.saveNew(bariCase);
+<span class="line-number">165</span>                 setResponsePage(Overview.<span class="keyword-directive">class</span>);
+<span class="line-number">166</span>             }
+<span class="line-number">167</span>       });
+<span class="line-number">168</span>     }
+<span class="line-number">169</span> }
+<span class="line-number">170</span> 
+<span class="line-number">171</span> 
+</pre></body>
+</html>

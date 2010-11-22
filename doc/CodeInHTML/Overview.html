@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Overview.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\src\java\dk\jsh\itdiplom\dbsw\bari\wicket\Overview.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.dbsw.bari.wicket;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.business.BariCaseBusiness;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.business.UserGroupBusiness;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Constants.CaseStatus;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Constants.Type;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Product;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> java.util.LinkedList;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> org.apache.wicket.AttributeModifier;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> org.apache.wicket.Page;
+<span class="line-number"> 14</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.basic.Label;
+<span class="line-number"> 15</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Button;
+<span class="line-number"> 16</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.ChoiceRenderer;
+<span class="line-number"> 17</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.DropDownChoice;
+<span class="line-number"> 18</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.form.Form;
+<span class="line-number"> 19</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.link.Link;
+<span class="line-number"> 20</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.list.ListItem;
+<span class="line-number"> 21</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.list.PageableListView;
+<span class="line-number"> 22</span> <span class="keyword-directive">import</span> org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
+<span class="line-number"> 23</span> <span class="keyword-directive">import</span> org.apache.wicket.model.AbstractReadOnlyModel;
+<span class="line-number"> 24</span> <span class="keyword-directive">im</span><span class="keyword-directive">port</span> org.apache.wicket.model.Model;
+<span class="line-number"> 25</span> 
+<span class="line-number"> 26</span> <span class="comment">/**</span>
+<span class="line-number"> 27</span> <span class="comment"> * </span><span class="comment">Overview</span> <span class="comment">page</span> <span class="comment">for</span> <span class="comment">all</span> <span class="comment">BariCases</span><span class="comment">.</span>
+<span class="line-number"> 28</span> <span class="comment"> * </span>
+<span class="line-number"> 29</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 30</span>  <span class="comment">*/</span>
+<span class="line-number"> 31</span> <span class="keyword-directive">public</span> <span class="keyword-directive">final</span> <span class="keyword-directive">class</span> Overview <span class="keyword-directive">extends</span> BasePage {
+<span class="line-number"> 32</span>     <span class="keyword-directive">pri</span><span class="keyword-directive">vate</span> DropDownChoice&lt;Product&gt; products;
+<span class="line-number"> 33</span>     <span class="keyword-directive">private</span> Product selectedProduct;
+<span class="line-number"> 34</span>     <span class="keyword-directive">private</span> DropDownChoice&lt;String&gt; dropDownChoiceType;
+<span class="line-number"> 35</span>     <span class="keyword-directive">private</span> DropDownChoice&lt;String&gt; statusDownChoiceType;
+<span class="line-number"> 36</span> 
+<span class="line-number"> 37</span>     <span class="comment">/**</span>
+<span class="line-number"> 38</span> <span class="comment">     * </span><span class="comment">Constructor</span><span class="comment">.</span>
+<span class="line-number"> 39</span>      <span class="comment">*/</span>
+<span class="line-number"> 40</span>     <span class="keyword-directive">public</span> Overview() {
+<span class="line-number"> 41</span>         <span class="keyword-directive">this</span>(<span class="keyword-directive">null</span>, Type.ERROR, <span class="character">&quot;</span><span class="character">Alle</span><span class="character">&quot;</span>);
+<span class="line-number"> 42</span>     }
+<span class="line-number"> 43</span> 
+<span class="line-number"> 44</span>     <span class="comment">/**</span>
+<span class="line-number"> 45</span> <span class="comment">     * </span><span class="comment">Const</span><span class="comment">ructor</span><span class="comment">.</span> 
+<span class="line-number"> 46</span> <span class="comment">     * </span>
+<span class="line-number"> 47</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">product</span> <span class="comment">Product</span> <span class="comment">to</span> <span class="comment">use</span> <span class="comment">as</span> <span class="comment">default</span> <span class="comment">on</span> <span class="comment">overview</span> <span class="comment">page</span><span class="comment">.</span>
+<span class="line-number"> 48</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">type</span> <span class="comment">Type</span> <span class="comment">used</span> <span class="comment">as</span> <span class="comment">default</span> <span class="comment">on</span> <span class="comment">overview</span> <span class="comment">pa</span><span class="comment">ge</span><span class="comment">.</span>
+<span class="line-number"> 49</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">status</span> <span class="comment">Status</span> <span class="comment">uses</span> <span class="comment">as</span> <span class="comment">default</span> <span class="comment">on</span> <span class="comment">overview</span> <span class="comment">page</span><span class="comment">.</span>
+<span class="line-number"> 50</span>      <span class="comment">*/</span>
+<span class="line-number"> 51</span>     <span class="keyword-directive">public</span> Overview(Product product, Type type, String status) {
+<span class="line-number"> 52</span>         BariUser bariUser = BariSession.get().getBariUser();
+<span class="line-number"> 53</span>         List&lt;Product&gt; listOfProducts =
+<span class="line-number"> 54</span>                 UserGroupBusiness.getAllDiscussionMessages(bariUser);
+<span class="line-number"> 55</span>         <span class="keyword-directive">if</span> (product == <span class="keyword-directive">null</span>) {
+<span class="line-number"> 56</span>             selectedProduct = listOfProducts.get(0);
+<span class="line-number"> 57</span>         }
+<span class="line-number"> 58</span>         <span class="keyword-directive">else</span> {
+<span class="line-number"> 59</span>             selectedProduct = product;
+<span class="line-number"> 60</span>         }
+<span class="line-number"> 61</span> 
+<span class="line-number"> 62</span>         <span class="comment">//Add search form.</span>
+<span class="line-number"> 63</span>         Form form = <span class="keyword-directive">new</span> Form(<span class="character">&quot;</span><span class="character">form</span><span class="character">&quot;</span>);
+<span class="line-number"> 64</span>         add(form);
+<span class="line-number"> 65</span>         products = <span class="keyword-directive">new</span> DropDownChoice(<span class="character">&quot;</span><span class="character">product</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(selectedProduct),
+<span class="line-number"> 66</span>                 listOfProducts, <span class="keyword-directive">new</span> ChoiceRenderer(<span class="character">&quot;</span><span class="character">name</span><span class="character">&quot;</span>, <span class="character">&quot;</span><span class="character">id</span><span class="character">&quot;</span>));
+<span class="line-number"> 67</span>         products.setRequired(<span class="keyword-directive">true</span>);
+<span class="line-number"> 68</span>         form.add(products);
+<span class="line-number"> 69</span> 
+<span class="line-number"> 70</span>         dropDownChoiceType = <span class="keyword-directive">new</span> DropDownChoice(<span class="character">&quot;</span><span class="character">type</span><span class="character">&quot;</span>,
+<span class="line-number"> 71</span>                 <span class="keyword-directive">new</span> Model(type.getDescription()), Type.getDescriptions());
+<span class="line-number"> 72</span>         form.add(dropDownChoiceType);
+<span class="line-number"> 73</span>         LinkedList&lt;String&gt; statusList =
+<span class="line-number"> 74</span>                 <span class="keyword-directive">new</span> LinkedList&lt;String&gt;(CaseStatus.getDescriptions());
+<span class="line-number"> 75</span>         statusList.addFirst(<span class="character">&quot;</span><span class="character">Alle</span><span class="character">&quot;</span>);
+<span class="line-number"> 76</span>         statusDownChoiceType =
+<span class="line-number"> 77</span>                 <span class="keyword-directive">new</span> DropDownChoice(<span class="character">&quot;</span><span class="character">status</span><span class="character">&quot;</span>, <span class="keyword-directive">new</span> Model(status), statusList);
+<span class="line-number"> 78</span>         form.add(statusDownChoiceType);
+<span class="line-number"> 79</span>         form.add(<span class="keyword-directive">new</span> Button(<span class="character">&quot;</span><span class="character">search</span><span class="character">&quot;</span>) {
+<span class="line-number"> 80</span>             @Override
+<span class="line-number"> 81</span>             <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onSubmit() {
+<span class="line-number"> 82</span>                 Page page = <span class="keyword-directive">new</span> Overview(products.getModelObject(),
+<span class="line-number"> 83</span>                         Type.getType(dropDownChoiceType.getModelObject()),
+<span class="line-number"> 84</span>                         statusDownChoiceType.getModelObject());
+<span class="line-number"> 85</span>                 setResponsePage(page);
+<span class="line-number"> 86</span>             }
+<span class="line-number"> 87</span>         });
+<span class="line-number"> 88</span> 
+<span class="line-number"> 89</span>         <span class="comment">//Add table with search results.</span>
+<span class="line-number"> 90</span>         CaseStatus cs = <span class="keyword-directive">null</span>;
+<span class="line-number"> 91</span>         <span class="keyword-directive">if</span> (!<span class="character">&quot;</span><span class="character">Alle</span><span class="character">&quot;</span>.equals(statusDownChoiceType.getModelObject())) {
+<span class="line-number"> 92</span>             cs = CaseStatus.getCaseStatus(statusDownChoiceType.getModelObject());
+<span class="line-number"> 93</span>         }
+<span class="line-number"> 94</span>         List&lt;BariCase&gt; bariCases = BariCaseBusiness.getAllBariCases(selectedProduct,
+<span class="line-number"> 95</span>                 type, cs);
+<span class="line-number"> 96</span>         PageableListView pageableListView =
+<span class="line-number"> 97</span>                 <span class="keyword-directive">new</span> PageableListView(<span class="character">&quot;</span><span class="character">pageable</span><span class="character">&quot;</span>, bariCases, 10) {
+<span class="line-number"> 98</span>             @Override
+<span class="line-number"> 99</span>             <span class="keyword-directive">protected</span> <span class="keyword-directive">void</span> populateItem(<span class="keyword-directive">final</span> ListItem item) {
+<span class="line-number">100</span>                 <span class="keyword-directive">final</span> BariCase bariCase = (BariCase) item.getModelObject();
+<span class="line-number">101</span>                 item.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">title</span><span class="character">&quot;</span>, bariCase.getTitle()));
+<span class="line-number">102</span>                 item.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">created</span><span class="character">&quot;</span>,
+<span class="line-number">103</span>                         standardDateTimeFormat.format(bariCase.getCreated())));
+<span class="line-number">104</span>                 item.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">finished</span><span class="character">&quot;</span>, 
+<span class="line-number">105</span>                         bariCase.getFinished() == <span class="keyword-directive">null</span> ? <span class="character">&quot;&quot;</span>
+<span class="line-number">106</span>                         :standardDateTimeFormat.format(bariCase.getFinished())));
+<span class="line-number">107</span>                 item.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">casestatus</span><span class="character">&quot;</span>,
+<span class="line-number">108</span>                         bariCase.getCaseStatus().getDescription()));
+<span class="line-number">109</span>                 item.add(<span class="keyword-directive">new</span> Label(<span class="character">&quot;</span><span class="character">devstatus</span><span class="character">&quot;</span>,
+<span class="line-number">110</span>                         bariCase.getDevStatus().getDescription()));
+<span class="line-number">111</span>                 item.add(<span class="keyword-directive">new</span> Link(<span class="character">&quot;</span><span class="character">action</span><span class="character">&quot;</span>) {
+<span class="line-number">112</span>                     @Override
+<span class="line-number">113</span>                     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> onClick() {
+<span class="line-number">114</span>                         Page page = <span class="keyword-directive">new</span> Update(bariCase);
+<span class="line-number">115</span>                         setResponsePage(page);
+<span class="line-number">116</span>                     }
+<span class="line-number">117</span>                 });
+<span class="line-number">118</span>                 item.add(<span class="keyword-directive">new</span> AttributeModifier(<span class="character">&quot;</span><span class="character">class</span><span class="character">&quot;</span>,
+<span class="line-number">119</span>                         <span class="keyword-directive">true</span>, <span class="keyword-directive">new</span> AbstractReadOnlyModel&lt;String&gt;()
+<span class="line-number">120</span>                 {
+<span class="line-number">121</span>                     @Override
+<span class="line-number">122</span>                     <span class="keyword-directive">public</span> String getObject()
+<span class="line-number">123</span>                     {
+<span class="line-number">124</span>                         <span class="keyword-directive">return</span> (item.getIndex() % 2 == 1) ? <span class="character">&quot;</span><span class="character">even</span><span class="character">&quot;</span> : <span class="character">&quot;</span><span class="character">odd</span><span class="character">&quot;</span>;
+<span class="line-number">125</span>                     }
+<span class="line-number">126</span>                 }));
+<span class="line-number">127</span>             }
+<span class="line-number">128</span>         };
+<span class="line-number">129</span>         add(pageableListView);
+<span class="line-number">130</span>         add(<span class="keyword-directive">new</span> PagingNavigator(<span class="character">&quot;</span><span class="character">navigator</span><span class="character">&quot;</span>, pageableListView));
+<span class="line-number">131</span>     }
+<span class="line-number">132</span> }
+<span class="line-number">133</span> 
+</pre></body>
+</html>

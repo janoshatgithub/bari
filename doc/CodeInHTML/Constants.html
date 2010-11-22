@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Constants.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\src\java\dk\jsh\itdiplom\dbsw\bari\domain\Constants.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.dbsw.bari.domain;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> java.util.ArrayList;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number">  5</span> 
+<span class="line-number">  6</span> <span class="comment">/**</span>
+<span class="line-number">  7</span> <span class="comment"> * </span><span class="comment">Constants</span> <span class="comment">and</span> <span class="comment">enums</span><span class="comment">.</span>
+<span class="line-number">  8</span> <span class="comment"> *</span>
+<span class="line-number">  9</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 10</span>  <span class="comment">*/</span>
+<span class="line-number"> 11</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> Constants {
+<span class="line-number"> 12</span>     <span class="keyword-directive">private</span> Constants() {}
+<span class="line-number"> 13</span> 
+<span class="line-number"> 14</span>     <span class="comment">/**</span>
+<span class="line-number"> 15</span> <span class="comment">     * </span><span class="comment">BaRI</span> <span class="comment">case</span> <span class="comment">type</span><span class="comment">: </span><span class="comment">REQUEST</span><span class="comment">, </span><span class="comment">ERROR</span><span class="comment">.</span>
+<span class="line-number"> 16</span>      <span class="comment">*/</span>
+<span class="line-number"> 17</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">enum</span> Type {
+<span class="line-number"> 18</span>         REQUEST(<span class="character">&quot;</span><span class="character">Nyt ø</span><span class="character">nske</span><span class="character">&quot;</span>),
+<span class="line-number"> 19</span>         ERROR(<span class="character">&quot;</span><span class="character">Fejl</span><span class="character">&quot;</span>);
+<span class="line-number"> 20</span> 
+<span class="line-number"> 21</span>         <span class="keyword-directive">private</span> String description;
+<span class="line-number"> 22</span> 
+<span class="line-number"> 23</span>         Type(String description) {
+<span class="line-number"> 24</span>             <span class="keyword-directive">this</span>.description = description;
+<span class="line-number"> 25</span>         }
+<span class="line-number"> 26</span> 
+<span class="line-number"> 27</span>         <span class="keyword-directive">public</span> String getDescription() {
+<span class="line-number"> 28</span>             <span class="keyword-directive">return</span> description;
+<span class="line-number"> 29</span>         }
+<span class="line-number"> 30</span> 
+<span class="line-number"> 31</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> List&lt;String&gt; getDescriptions() {
+<span class="line-number"> 32</span>             List&lt;String&gt; descriptions = <span class="keyword-directive">new</span> ArrayList&lt;String&gt;();
+<span class="line-number"> 33</span>             descriptions.add(ERROR.description);
+<span class="line-number"> 34</span>             descriptions.add(REQUEST.description);
+<span class="line-number"> 35</span>             <span class="keyword-directive">return</span> descriptions;
+<span class="line-number"> 36</span>         }
+<span class="line-number"> 37</span> 
+<span class="line-number"> 38</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> Type getType(String description) {
+<span class="line-number"> 39</span>             <span class="keyword-directive">if</span> (REQUEST.description.equals(description)) <span class="keyword-directive">return</span> REQUEST;
+<span class="line-number"> 40</span>             <span class="keyword-directive">return</span> ERROR;
+<span class="line-number"> 41</span>         }
+<span class="line-number"> 42</span>      }
+<span class="line-number"> 43</span> 
+<span class="line-number"> 44</span>     <span class="comment">/**</span>
+<span class="line-number"> 45</span> <span class="comment">     * </span><span class="comment">Case</span> <span class="comment">status</span><span class="comment">: </span><span class="comment">NEW</span><span class="comment">, </span><span class="comment">CONSIDER</span><span class="comment">, </span><span class="comment">APPROVED</span><span class="comment">, </span><span class="comment">REJECTED</span> <span class="comment">and</span> <span class="comment">DONE</span><span class="comment">.</span>
+<span class="line-number"> 46</span>      <span class="comment">*/</span>
+<span class="line-number"> 47</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">enum</span> CaseStatus {
+<span class="line-number"> 48</span>         NEW(<span class="character">&quot;</span><span class="character">Ny</span><span class="character">&quot;</span>),
+<span class="line-number"> 49</span>         CONSIDERING(<span class="character">&quot;</span><span class="character">Behandles</span><span class="character">&quot;</span>),
+<span class="line-number"> 50</span>         APPROVED(<span class="character">&quot;</span><span class="character">Godkendt</span><span class="character">&quot;</span>),
+<span class="line-number"> 51</span>         REJECTED(<span class="character">&quot;</span><span class="character">Afvist</span><span class="character">&quot;</span>),
+<span class="line-number"> 52</span>         DONE(<span class="character">&quot;</span><span class="character">Afs</span><span class="character">luttet</span><span class="character">&quot;</span>);
+<span class="line-number"> 53</span> 
+<span class="line-number"> 54</span>         <span class="keyword-directive">private</span> String description;
+<span class="line-number"> 55</span> 
+<span class="line-number"> 56</span>         CaseStatus(String description) {
+<span class="line-number"> 57</span>             <span class="keyword-directive">this</span>.description = description;
+<span class="line-number"> 58</span>         }
+<span class="line-number"> 59</span> 
+<span class="line-number"> 60</span>         <span class="keyword-directive">public</span> String getDescription() {
+<span class="line-number"> 61</span>             <span class="keyword-directive">return</span> description;
+<span class="line-number"> 62</span>         }
+<span class="line-number"> 63</span> 
+<span class="line-number"> 64</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> List&lt;String&gt; getDescriptions() {
+<span class="line-number"> 65</span>             List&lt;String&gt; descriptions = <span class="keyword-directive">new</span> ArrayList&lt;String&gt;();
+<span class="line-number"> 66</span>             descriptions.add(NEW.description);
+<span class="line-number"> 67</span>             descriptions.add(CONSIDERING.description);
+<span class="line-number"> 68</span>             descriptions.add(APPROVED.description);
+<span class="line-number"> 69</span>             descriptions.add(REJECTED.description);
+<span class="line-number"> 70</span>             descriptions.add(DONE.description);
+<span class="line-number"> 71</span>             <span class="keyword-directive">return</span> descriptions;
+<span class="line-number"> 72</span>         }
+<span class="line-number"> 73</span> 
+<span class="line-number"> 74</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> CaseStatus getCaseStatus(String description) {
+<span class="line-number"> 75</span>             <span class="keyword-directive">if</span> (NEW.description.equals(description)) <span class="keyword-directive">return</span> NEW;
+<span class="line-number"> 76</span>             <span class="keyword-directive">if</span> (CONSIDERING.description.equals(description)) <span class="keyword-directive">return</span> CONSIDERING;
+<span class="line-number"> 77</span>             <span class="keyword-directive">if</span> (APPROVED.description.equals(description)) <span class="keyword-directive">return</span> APPROVED;
+<span class="line-number"> 78</span>             <span class="keyword-directive">if</span> (DONE.description.equals(description)) <span class="keyword-directive">return</span> DONE;
+<span class="line-number"> 79</span>             <span class="keyword-directive">return</span> REJECTED;
+<span class="line-number"> 80</span>         }
+<span class="line-number"> 81</span>     }
+<span class="line-number"> 82</span> 
+<span class="line-number"> 83</span>     <span class="comment">/**</span>
+<span class="line-number"> 84</span> <span class="comment">     * </span><span class="comment">Developer</span> <span class="comment">status</span><span class="comment">: </span><span class="comment">NOTSTARTED</span><span class="comment">, </span><span class="comment">STARTED</span><span class="comment">, </span><span class="comment">READYTOTEST</span><span class="comment">, </span><span class="comment">TESTED</span> <span class="comment">and</span>
+<span class="line-number"> 85</span> <span class="comment">     * </span><span class="comment">INPRODUCTION</span><span class="comment">.</span>
+<span class="line-number"> 86</span>      <span class="comment">*/</span>
+<span class="line-number"> 87</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">enum</span> DevStatus {
+<span class="line-number"> 88</span>         NOTSTARTED(<span class="character">&quot;</span><span class="character">Ej begyndt</span><span class="character">&quot;</span>),
+<span class="line-number"> 89</span>         STARTED(<span class="character">&quot;</span><span class="character">I gang</span><span class="character">&quot;</span>),
+<span class="line-number"> 90</span>         READYTOTEST(<span class="character">&quot;</span><span class="character">Klar til test</span><span class="character">&quot;</span>),
+<span class="line-number"> 91</span>         TESTED(<span class="character">&quot;</span><span class="character">Testet</span><span class="character">&quot;</span>),
+<span class="line-number"> 92</span>         INPRODUCTION(<span class="character">&quot;</span><span class="character">I prod.</span><span class="character">&quot;</span>);
+<span class="line-number"> 93</span> 
+<span class="line-number"> 94</span>         <span class="keyword-directive">private</span> String description;
+<span class="line-number"> 95</span> 
+<span class="line-number"> 96</span>         DevStatus(String description) {
+<span class="line-number"> 97</span>             <span class="keyword-directive">this</span>.description = description;
+<span class="line-number"> 98</span>         }
+<span class="line-number"> 99</span> 
+<span class="line-number">100</span>         <span class="keyword-directive">public</span> String getDescription() {
+<span class="line-number">101</span>             <span class="keyword-directive">return</span> description;
+<span class="line-number">102</span>         }
+<span class="line-number">103</span> 
+<span class="line-number">104</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> List&lt;String&gt; getDescriptions() {
+<span class="line-number">105</span>             List&lt;String&gt; descriptions = <span class="keyword-directive">new</span> ArrayList&lt;String&gt;();
+<span class="line-number">106</span>             descriptions.add(NOTSTARTED.description);
+<span class="line-number">107</span>             descriptions.add(STARTED.description);
+<span class="line-number">108</span>             descriptions.add(READYTOTEST.description);
+<span class="line-number">109</span>             descriptions.add(TESTED.description);
+<span class="line-number">110</span>             descriptions.add(INPRODUCTION.description);
+<span class="line-number">111</span>             <span class="keyword-directive">return</span> descriptions;
+<span class="line-number">112</span>         }
+<span class="line-number">113</span> 
+<span class="line-number">114</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> DevStatus getDevStatus(String description) {
+<span class="line-number">115</span>             <span class="keyword-directive">if</span> (NOTSTARTED.description.equals(description)) <span class="keyword-directive">return</span> NOTSTARTED;
+<span class="line-number">116</span>             <span class="keyword-directive">if</span> (STARTED.description.equals(description)) <span class="keyword-directive">return</span> STARTED;
+<span class="line-number">117</span>             <span class="keyword-directive">if</span> (READYTOTEST.description.equals(description)) <span class="keyword-directive">return</span> READYTOTEST;
+<span class="line-number">118</span>             <span class="keyword-directive">if</span> (TESTED.description.equals(description)) <span class="keyword-directive">return</span> TESTED;
+<span class="line-number">119</span>             <span class="keyword-directive">return</span> INPRODUCTION;
+<span class="line-number">120</span>         }
+<span class="line-number">121</span>     }
+<span class="line-number">122</span> 
+<span class="line-number">123</span>      <span class="comment">/**</span>
+<span class="line-number">124</span> <span class="comment">     * </span><span class="comment">BaRI</span> <span class="comment">user</span> <span class="comment">role</span><span class="comment">: </span><span class="comment">ADMIN</span><span class="comment">, </span><span class="comment">DEVELOPER</span><span class="comment">, </span><span class="comment">NORMAL</span><span class="comment">.</span>
+<span class="line-number">125</span>      <span class="comment">*/</span>
+<span class="line-number">126</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">e</span><span class="keyword-directive">num</span> UserRole {
+<span class="line-number">127</span>         ADMIN(<span class="character">&quot;</span><span class="character">Administrator</span><span class="character">&quot;</span>),
+<span class="line-number">128</span>         DEVELOPER(<span class="character">&quot;</span><span class="character">Udvikler</span><span class="character">&quot;</span>),
+<span class="line-number">129</span>         NORMAL(<span class="character">&quot;</span><span class="character">Alm. bruger</span><span class="character">&quot;</span>);
+<span class="line-number">130</span> 
+<span class="line-number">131</span>         <span class="keyword-directive">private</span> String name;
+<span class="line-number">132</span> 
+<span class="line-number">133</span>         UserRole(String name) {
+<span class="line-number">134</span>             <span class="keyword-directive">this</span>.name = name;
+<span class="line-number">135</span>         }
+<span class="line-number">136</span> 
+<span class="line-number">137</span>         <span class="keyword-directive">public</span> String getName() {
+<span class="line-number">138</span>             <span class="keyword-directive">return</span> name;
+<span class="line-number">139</span>         }
+<span class="line-number">140</span> 
+<span class="line-number">141</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">st</span><span class="keyword-directive">atic</span> List&lt;String&gt; getNames() {
+<span class="line-number">142</span>             List&lt;String&gt; names = <span class="keyword-directive">new</span> ArrayList&lt;String&gt;();
+<span class="line-number">143</span>             names.add(ADMIN.name);
+<span class="line-number">144</span>             names.add(DEVELOPER.name);
+<span class="line-number">145</span>             names.add(NORMAL.name);
+<span class="line-number">146</span>             <span class="keyword-directive">return</span> names;
+<span class="line-number">147</span>         }
+<span class="line-number">148</span> 
+<span class="line-number">149</span>         <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> UserRole getName(String name) {
+<span class="line-number">150</span>             <span class="keyword-directive">if</span> (ADMIN.name.equals(name)) {
+<span class="line-number">151</span>                 <span class="keyword-directive">return</span> ADMIN;
+<span class="line-number">152</span>             }
+<span class="line-number">153</span>             <span class="keyword-directive">else</span> <span class="keyword-directive">if</span> (DEVELOPER.name.equals(name)) {
+<span class="line-number">154</span>                 <span class="keyword-directive">return</span> DEVELOPER;
+<span class="line-number">155</span>             }
+<span class="line-number">156</span>             <span class="keyword-directive">return</span> NORMAL;
+<span class="line-number">157</span>         }
+<span class="line-number">158</span>      }
+<span class="line-number">159</span> }
+<span class="line-number">160</span> 
+</pre></body>
+</html>

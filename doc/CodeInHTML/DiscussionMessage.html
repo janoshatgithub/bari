@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>DiscussionMessage.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\src\java\dk\jsh\itdiplom\dbsw\bari\domain\DiscussionMessage.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.dbsw.bari.domain;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> java.io.Serializable;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> javax.persistence.*;
+<span class="line-number"> 6</span> 
+<span class="line-number"> 7</span> <span class="comment">/**</span>
+<span class="line-number"> 8</span> <span class="comment"> * </span><span class="comment">Discussion</span> <span class="comment">message</span> <span class="comment">entity</span> <span class="comment">class</span><span class="comment">.</span>
+<span class="line-number"> 9</span> <span class="comment"> * </span>
+<span class="line-number">10</span> <span class="comment"> *</span> <span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">11</span>  <span class="comment">*/</span>
+<span class="line-number">12</span> @Entity
+<span class="line-number">13</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> DiscussionMessage <span class="keyword-directive">implements</span> Serializable {
+<span class="line-number">14</span>     <span class="keyword-directive">private</span> <span class="keyword-directive">static</span> <span class="keyword-directive">final</span> <span class="keyword-directive">long</span> serialVersionUID = 1L;
+<span class="line-number">15</span> 
+<span class="line-number">16</span>     @Id
+<span class="line-number">17</span>     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="line-number">18</span>     <span class="keyword-directive">protected</span> Long id;
+<span class="line-number">19</span>     @Version
+<span class="line-number">20</span>     @Column(nullable = <span class="keyword-directive">false</span>)
+<span class="line-number">21</span>     <span class="keyword-directive">pr</span><span class="keyword-directive">otected</span> Integer version;
+<span class="line-number">22</span>     @ManyToOne(optional=<span class="keyword-directive">false</span>)
+<span class="line-number">23</span>     @org.hibernate.annotations.ForeignKey(name=<span class="character">&quot;</span><span class="character">fk_from_discussionmessage_to_baricase</span><span class="character">&quot;</span>)
+<span class="line-number">24</span>     <span class="keyword-directive">prote</span><span class="keyword-directive">cted</span> BariCase bariCase;
+<span class="line-number">25</span>     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+<span class="line-number">26</span>     @Column(nullable = <span class="keyword-directive">false</span>)
+<span class="line-number">27</span>     <span class="keyword-directive">protected</span> Date created;
+<span class="line-number">28</span>     @ManyToOne(optional=<span class="keyword-directive">false</span>)
+<span class="line-number">29</span>     @org.hibernate.annotations.ForeignKey(name=<span class="character">&quot;</span><span class="character">fk_from_discussiommessage_to_bariuser</span><span class="character">&quot;</span>)
+<span class="line-number">30</span>     <span class="keyword-directive">protected</span> BariUser bariUser;
+<span class="line-number">31</span>     @Column(length=400, nullable = <span class="keyword-directive">false</span>)
+<span class="line-number">32</span>     <span class="keyword-directive">protected</span> String message;
+<span class="line-number">33</span> 
+<span class="line-number">34</span>     <span class="keyword-directive">public</span> DiscussionMessage() {
+<span class="line-number">35</span>     }
+<span class="line-number">36</span>     
+<span class="line-number">37</span>     <span class="keyword-directive">public</span> DiscussionMessage(BariCase bariCase, Date created, BariUser bariUser,
+<span class="line-number">38</span>             String message) {
+<span class="line-number">39</span>         <span class="keyword-directive">this</span>.bariCase = bariCase;
+<span class="line-number">40</span>         <span class="keyword-directive">this</span>.created = created;
+<span class="line-number">41</span>         <span class="keyword-directive">this</span>.bariUser = bariUser;
+<span class="line-number">42</span>         <span class="keyword-directive">this</span>.message = message;
+<span class="line-number">43</span>     }
+<span class="line-number">44</span> 
+<span class="line-number">45</span>     <span class="keyword-directive">public</span> BariUser getBariUser() {
+<span class="line-number">46</span>         <span class="keyword-directive">return</span> bariUser;
+<span class="line-number">47</span>     }
+<span class="line-number">48</span> 
+<span class="line-number">49</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setBariUser(BariUser bariUser) {
+<span class="line-number">50</span>         <span class="keyword-directive">this</span>.bariUser = bariUser;
+<span class="line-number">51</span>     }
+<span class="line-number">52</span> 
+<span class="line-number">53</span>     <span class="keyword-directive">public</span> Long getId() {
+<span class="line-number">54</span>         <span class="keyword-directive">return</span> id;
+<span class="line-number">55</span>     }
+<span class="line-number">56</span> 
+<span class="line-number">57</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setId(Long id) {
+<span class="line-number">58</span>         <span class="keyword-directive">this</span>.id = id;
+<span class="line-number">59</span>     }
+<span class="line-number">60</span> 
+<span class="line-number">61</span>     <span class="keyword-directive">public</span> Integer getVersion() {
+<span class="line-number">62</span>         <span class="keyword-directive">return</span> version;
+<span class="line-number">63</span>     }
+<span class="line-number">64</span> 
+<span class="line-number">65</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setVersion(Integer version) {
+<span class="line-number">66</span>         <span class="keyword-directive">th</span><span class="keyword-directive">is</span>.version = version;
+<span class="line-number">67</span>     }
+<span class="line-number">68</span> 
+<span class="line-number">69</span>     <span class="keyword-directive">public</span> BariCase getBariCase() {
+<span class="line-number">70</span>         <span class="keyword-directive">return</span> bariCase;
+<span class="line-number">71</span>     }
+<span class="line-number">72</span> 
+<span class="line-number">73</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setBariCase(BariCase bariCase) {
+<span class="line-number">74</span>         <span class="keyword-directive">this</span>.bariCase = bariCase;
+<span class="line-number">75</span>     }
+<span class="line-number">76</span> 
+<span class="line-number">77</span>     <span class="keyword-directive">public</span> Date getCreated() {
+<span class="line-number">78</span>         <span class="keyword-directive">return</span> created;
+<span class="line-number">79</span>     }
+<span class="line-number">80</span> 
+<span class="line-number">81</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setCreated(Date created) {
+<span class="line-number">82</span>         <span class="keyword-directive">this</span>.created = created;
+<span class="line-number">83</span>     }
+<span class="line-number">84</span> 
+<span class="line-number">85</span>     <span class="keyword-directive">public</span> String getMessage() {
+<span class="line-number">86</span>         <span class="keyword-directive">return</span> message;
+<span class="line-number">87</span>     }
+<span class="line-number">88</span> 
+<span class="line-number">89</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">void</span> setMessage(String message) {
+<span class="line-number">90</span>         <span class="keyword-directive">this</span>.message = message;
+<span class="line-number">91</span>     }
+<span class="line-number">92</span> }
+<span class="line-number">93</span> 
+<span class="line-number">94</span> 
+</pre></body>
+</html>

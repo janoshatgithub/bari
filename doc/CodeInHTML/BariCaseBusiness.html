@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>BariCaseBusiness.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\src\java\dk\jsh\itdiplom\dbsw\bari\business\BariCaseBusiness.java</td></tr></table>
+<pre>
+<span class="line-number">  1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.dbsw.bari.business;
+<span class="line-number">  2</span> 
+<span class="line-number">  3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.BariCase;
+<span class="line-number">  4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Constants.CaseStatus;
+<span class="line-number">  5</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Constants.Type;
+<span class="line-number">  6</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.Product;
+<span class="line-number">  7</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.util.HibernateUtil;
+<span class="line-number">  8</span> <span class="keyword-directive">import</span> java.util.ArrayList;
+<span class="line-number">  9</span> <span class="keyword-directive">import</span> java.util.Date;
+<span class="line-number"> 10</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 11</span> <span class="keyword-directive">import</span> org.hibernate.Query;
+<span class="line-number"> 12</span> <span class="keyword-directive">import</span> org.hibernate.Session;
+<span class="line-number"> 13</span> <span class="keyword-directive">import</span> org.hibernate.Transaction;
+<span class="line-number"> 14</span> 
+<span class="line-number"> 15</span> <span class="comment">/**</span>
+<span class="line-number"> 16</span> <span class="comment"> * </span><span class="comment">Business</span> <span class="comment">metods</span> <span class="comment">for</span> <span class="comment">BariCase</span><span class="comment">.</span>
+<span class="line-number"> 17</span> <span class="comment"> *</span>
+<span class="line-number"> 18</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number"> 19</span>  <span class="comment">*/</span>
+<span class="line-number"> 20</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> BariCaseBusiness {
+<span class="line-number"> 21</span>     <span class="comment">/**</span>
+<span class="line-number"> 22</span> <span class="comment">     * </span><span class="comment">Create</span> <span class="comment">new</span> <span class="comment">BariCase</span><span class="comment">.</span>
+<span class="line-number"> 23</span> <span class="comment">     * </span>
+<span class="line-number"> 24</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">bariCase</span> <span class="comment">BariCase</span> 
+<span class="line-number"> 25</span>      <span class="comment">*/</span>
+<span class="line-number"> 26</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> <span class="keyword-directive">void</span> saveNew(BariCase bariCase) {
+<span class="line-number"> 27</span>         Session session = HibernateUtil.getSessionFactory().openSession();
+<span class="line-number"> 28</span>         Transaction tx = session.beginTransaction();
+<span class="line-number"> 29</span>         session.save(bariCase);
+<span class="line-number"> 30</span>         tx.commit();
+<span class="line-number"> 31</span>         session.close();
+<span class="line-number"> 32</span>     }
+<span class="line-number"> 33</span> 
+<span class="line-number"> 34</span>     <span class="comment">/**</span>
+<span class="line-number"> 35</span> <span class="comment">     * </span><span class="comment">Get</span> <span class="comment">all</span> <span class="comment">BariCase</span> <span class="comment">Eroor</span> <span class="comment">or</span> <span class="comment">Request</span> <span class="comment">objects</span> <span class="comment">for</span> <span class="comment">a</span> <span class="comment">product</span><span class="comment">.</span>
+<span class="line-number"> 36</span> <span class="comment">     *</span>
+<span class="line-number"> 37</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">product</span> <span class="comment">used</span> <span class="comment">in</span> <span class="comment">search</span><span class="comment">.</span>
+<span class="line-number"> 38</span>     <span class="comment"> * </span><span class="ST0">@param</span> <span class="comment">type</span> <span class="comment">used</span> <span class="comment">in</span> <span class="comment">search</span><span class="comment">.</span>
+<span class="line-number"> 39</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">caseStatus</span> <span class="comment">used</span> <span class="comment">in</span> <span class="comment">search</span><span class="comment">, </span><span class="comment">can</span> <span class="comment">be</span> <span class="comment">null</span><span class="comment">.</span>
+<span class="line-number"> 40</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">a</span> <span class="comment">List</span> <span class="comment">of</span> <span class="comment">BariCase</span> <span class="comment">objects</span><span class="comment">.</span>
+<span class="line-number"> 41</span>      <span class="comment">*/</span>
+<span class="line-number"> 42</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> List&lt;BariCase&gt; getAllBariCases(Product product,
+<span class="line-number"> 43</span>             Type type, CaseStatus caseStatus) {
+<span class="line-number"> 44</span>         List&lt;BariCase&gt; bariCases = <span class="keyword-directive">new</span> ArrayList&lt;BariCase&gt;();
+<span class="line-number"> 45</span>         Session session = HibernateUtil.getSessionFactory().openSession();
+<span class="line-number"> 46</span>         String hql = <span class="character">&quot;</span><span class="character">select bariCase from </span><span class="character">&quot;</span>
+<span class="line-number"> 47</span>                 + <span class="character">&quot;</span><span class="character">dk.jsh.itdiplom.dbsw.bari.domain.BariCase bariCase </span><span class="character">&quot;</span>
+<span class="line-number"> 48</span>                 + <span class="character">&quot;</span><span class="character">where bariCase.type = :type and </span><span class="character">&quot;</span>
+<span class="line-number"> 49</span>                 + <span class="character">&quot;</span><span class="character">product.id = :productid </span><span class="character">&quot;</span>;
+<span class="line-number"> 50</span>         <span class="keyword-directive">if</span> (caseStatus != <span class="keyword-directive">null</span>) {
+<span class="line-number"> 51</span>             hql += <span class="character">&quot;</span><span class="character">and bariCase.caseStatus = :c</span><span class="character">aseStatus </span><span class="character">&quot;</span>;
+<span class="line-number"> 52</span>         }
+<span class="line-number"> 53</span>         hql += <span class="character">&quot;</span><span class="character">order by bariCase.created desc</span><span class="character">&quot;</span>;
+<span class="line-number"> 54</span>         Query query = session.createQuery(hql);
+<span class="line-number"> 55</span>         query.setString(<span class="character">&quot;</span><span class="character">type</span><span class="character">&quot;</span>, type.toString());
+<span class="line-number"> 56</span>         query.setString(<span class="character">&quot;</span><span class="character">productid</span><span class="character">&quot;</span>, product.getId().toString());
+<span class="line-number"> 57</span>         <span class="keyword-directive">if</span> (caseStatus != <span class="keyword-directive">null</span>) {
+<span class="line-number"> 58</span>             query.setString(<span class="character">&quot;</span><span class="character">caseStatus</span><span class="character">&quot;</span>, caseStatus.toString());
+<span class="line-number"> 59</span>         }
+<span class="line-number"> 60</span>         bariCases = query.list();
+<span class="line-number"> 61</span>         session.close();
+<span class="line-number"> 62</span>         <span class="keyword-directive">return</span> bariCases;
+<span class="line-number"> 63</span>     }
+<span class="line-number"> 64</span> 
+<span class="line-number"> 65</span>     <span class="comment">/**</span>
+<span class="line-number"> 66</span> <span class="comment">     * </span><span class="comment">Update</span> <span class="comment">a</span> <span class="comment">Ba</span><span class="comment">riCase</span><span class="comment">.</span>
+<span class="line-number"> 67</span> <span class="comment">     * </span>
+<span class="line-number"> 68</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">bariCase</span> <span class="comment">BariCase</span>
+<span class="line-number"> 69</span>      <span class="comment">*/</span>
+<span class="line-number"> 70</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> <span class="keyword-directive">void</span> update(BariCase bariCase) {
+<span class="line-number"> 71</span>         Session session = HibernateUtil.getSessionFactory().openSession();
+<span class="line-number"> 72</span>         <span class="keyword-directive">try</span> {
+<span class="line-number"> 73</span>             Transaction tx = session.beginTransaction();
+<span class="line-number"> 74</span>             <span class="keyword-directive">if</span> (bariCase.getCaseStatus().equals(CaseStatus.DONE)) {
+<span class="line-number"> 75</span>                 bariCase.setFinished(<span class="keyword-directive">new</span> Date());
+<span class="line-number"> 76</span>             }
+<span class="line-number"> 77</span>             session.update(bariCase);
+<span class="line-number"> 78</span>             tx.commit();
+<span class="line-number"> 79</span>         }
+<span class="line-number"> 80</span>         <span class="keyword-directive">finally</span> {
+<span class="line-number"> 81</span>             session.close();
+<span class="line-number"> 82</span>         }
+<span class="line-number"> 83</span>     }
+<span class="line-number"> 84</span> 
+<span class="line-number"> 85</span>     <span class="comment">/**</span>
+<span class="line-number"> 86</span> <span class="comment">     * </span><span class="comment">Delete</span> <span class="comment">a</span> <span class="comment">bariCase</span> <span class="comment">and</span> <span class="comment">all</span> <span class="comment">discussion</span> <span class="comment">messages</span><span class="comment">.</span>
+<span class="line-number"> 87</span>   <span class="comment">   * </span>
+<span class="line-number"> 88</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">bariCase</span> <span class="comment">BariCase</span>
+<span class="line-number"> 89</span>      <span class="comment">*/</span>
+<span class="line-number"> 90</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> <span class="keyword-directive">void</span> delete(BariCase bariCase) {
+<span class="line-number"> 91</span>         Session session = HibernateUtil.getSessionFactory().openSession();
+<span class="line-number"> 92</span>         Transaction tx = session.beginTransaction();
+<span class="line-number"> 93</span>         String sql = <span class="character">&quot;</span><span class="character">delete from DiscussionMessage where </span><span class="character">&quot;</span>
+<span class="line-number"> 94</span>                 + <span class="character">&quot;</span><span class="character">bariCase_id = :id</span><span class="character">&quot;</span>;
+<span class="line-number"> 95</span>         Query query = session.createSQLQuery(sql);
+<span class="line-number"> 96</span>         query.setString(<span class="character">&quot;</span><span class="character">id</span><span class="character">&quot;</span>, bariCase.getId().toString());
+<span class="line-number"> 97</span>         query.executeUpdate();
+<span class="line-number"> 98</span>         session.delete(bariCase);
+<span class="line-number"> 99</span>         tx.commit();
+<span class="line-number">100</span>         session.close();
+<span class="line-number">101</span>     }
+<span class="line-number">102</span> }
+<span class="line-number">103</span> 
+</pre></body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>BariUserBusiness.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {color: #969696; font-family: Monospaced; font-weight: bold}
+.comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.character {color: #ce7b00}
+.keyword-directive {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\src\java\dk\jsh\itdiplom\dbsw\bari\business\BariUserBusiness.java</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="keyword-directive">package</span> dk.jsh.itdiplom.dbsw.bari.business;
+<span class="line-number"> 2</span> 
+<span class="line-number"> 3</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.domain.BariUser;
+<span class="line-number"> 4</span> <span class="keyword-directive">import</span> dk.jsh.itdiplom.dbsw.bari.util.HibernateUtil;
+<span class="line-number"> 5</span> <span class="keyword-directive">import</span> java.util.List;
+<span class="line-number"> 6</span> <span class="keyword-directive">i</span><span class="keyword-directive">mport</span> org.hibernate.Query;
+<span class="line-number"> 7</span> <span class="keyword-directive">import</span> org.hibernate.Session;
+<span class="line-number"> 8</span> 
+<span class="line-number"> 9</span> <span class="comment">/**</span>
+<span class="line-number">10</span> <span class="comment"> * </span><span class="comment">Business</span> <span class="comment">metods</span> <span class="comment">for</span> <span class="comment">BariUser</span><span class="comment">.</span>
+<span class="line-number">11</span> <span class="comment"> *</span>
+<span class="line-number">12</span> <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">Jan</span> <span class="comment">S</span><span class="comment">.</span> <span class="comment">Hansen</span>
+<span class="line-number">13</span>  <span class="comment">*/</span>
+<span class="line-number">14</span> <span class="keyword-directive">public</span> <span class="keyword-directive">class</span> BariUserBusiness {
+<span class="line-number">15</span> 
+<span class="line-number">16</span>     <span class="comment">/**</span>
+<span class="line-number">17</span> <span class="comment">     * </span><span class="comment">Gets</span> <span class="comment">a</span> <span class="comment">bariUser</span> <span class="comment">from</span> <span class="comment">login</span> <span class="comment">and</span> <span class="comment">password</span><span class="comment">.</span>
+<span class="line-number">18</span> <span class="comment">     * </span>
+<span class="line-number">19</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">login</span> <span class="comment">bari</span> <span class="comment">user</span> <span class="comment">login</span>
+<span class="line-number">20</span> <span class="comment">     * </span><span class="ST0">@param</span> <span class="comment">password</span> <span class="comment">pass</span><span class="comment">word</span>
+<span class="line-number">21</span> <span class="comment">     * </span><span class="ST0">@return</span> <span class="comment">a</span> <span class="comment">BariUser</span> <span class="comment">or</span> <span class="comment">null</span> <span class="comment">if</span> <span class="comment">login</span> <span class="comment">or</span> <span class="comment">password</span> <span class="comment">is</span> <span class="comment">wrong</span><span class="comment">.</span>
+<span class="line-number">22</span>      <span class="comment">*/</span>
+<span class="line-number">23</span>     <span class="keyword-directive">public</span> <span class="keyword-directive">static</span> BariUser isValidUser(String login, String password) {
+<span class="line-number">24</span>         BariUser bariUser = <span class="keyword-directive">null</span>;
+<span class="line-number">25</span>         Session session = HibernateUtil.getSessionFactory().openSession();
+<span class="line-number">26</span>         String hql = <span class="character">&quot;</span><span class="character">select bariUser from </span><span class="character">&quot;</span>
+<span class="line-number">27</span>                 + <span class="character">&quot;</span><span class="character">dk.jsh.itdiplom.dbsw.bari.domain.BariUser bariUser </span><span class="character">&quot;</span>
+<span class="line-number">28</span>                 + <span class="character">&quot;</span><span class="character">where bariUser.login = :login </span><span class="character">&quot;</span>
+<span class="line-number">29</span>                 + <span class="character">&quot;</span><span class="character">and bariUser.password = :password</span><span class="character">&quot;</span>;
+<span class="line-number">30</span>         Query query = session.createQuery(hql);
+<span class="line-number">31</span>         query.setString(<span class="character">&quot;</span><span class="character">login</span><span class="character">&quot;</span>, login);
+<span class="line-number">32</span>         query.setString(<span class="character">&quot;</span><span class="character">password</span><span class="character">&quot;</span>, login);
+<span class="line-number">33</span>         List&lt;BariUser&gt; bariUsers = query.list();
+<span class="line-number">34</span>         <span class="keyword-directive">if</span> (bariUsers.size() == 1) {
+<span class="line-number">35</span>             bariUser = bariUsers.get(0);
+<span class="line-number">36</span>         }
+<span class="line-number">37</span>         <span class="keyword-directive">else</span> <span class="keyword-directive">if</span> (bariUsers.size() &gt; 1) {
+<span class="line-number">38</span>             <span class="keyword-directive">throw</span> <span class="keyword-directive">new</span> RuntimeException(<span class="character">&quot;</span><span class="character">More then one user with login </span><span class="character">&quot;</span> +
+<span class="line-number">39</span>                     login);
+<span class="line-number">40</span>         }
+<span class="line-number">41</span>         session.close();
+<span class="line-number">42</span>         <span class="keyword-directive">return</span> bariUser;
+<span class="line-number">43</span>     }
+<span class="line-number">44</span> }
+<span class="line-number">45</span> 
+</pre></body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>bari_ddl.sql</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.line-number {background-color: #e9e8e2}
+.sql-identifier {color: #009900}
+.sql-keyword {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\bari_ddl.sql</td></tr></table>
+<pre>
+<span class="line-number">  1</span> 
+<span class="line-number">  2</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">BariCase</span> 
+<span class="line-number">  3</span>         <span class="sql-keyword">drop</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_baricase_to_product</span>;
+<span class="line-number">  4</span> 
+<span class="line-number">  5</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">BariCase</span> 
+<span class="line-number">  6</span>         <span class="sql-keyword">drop</span> <span class="sql-keyword">constrain</span><span class="sql-keyword">t</span> <span class="sql-identifier">fk_from_baricase_to_bariuser</span>;
+<span class="line-number">  7</span> 
+<span class="line-number">  8</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">DiscussionMessage</span> 
+<span class="line-number">  9</span>         <span class="sql-keyword">drop</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_discussionmessage_to_baricase</span>;
+<span class="line-number"> 10</span> 
+<span class="line-number"> 11</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">DiscussionMe</span><span class="sql-identifier">ssage</span> 
+<span class="line-number"> 12</span>         <span class="sql-keyword">drop</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_discussiommessage_to_bariuser</span>;
+<span class="line-number"> 13</span> 
+<span class="line-number"> 14</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">UserGroup</span> 
+<span class="line-number"> 15</span>         <span class="sql-keyword">drop</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_userg</span><span class="sql-identifier">roup_to_product</span>;
+<span class="line-number"> 16</span> 
+<span class="line-number"> 17</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">UserGroup</span> 
+<span class="line-number"> 18</span>         <span class="sql-keyword">drop</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_usergroup_to_bariuser</span>;
+<span class="line-number"> 19</span> 
+<span class="line-number"> 20</span>     <span class="sql-keyword">drop</span> <span class="sql-keyword">table</span> <span class="sql-identifier">BariCase</span>;
+<span class="line-number"> 21</span> 
+<span class="line-number"> 22</span>     <span class="sql-keyword">drop</span> <span class="sql-keyword">table</span> <span class="sql-identifier">Bar</span><span class="sql-identifier">iUser</span>;
+<span class="line-number"> 23</span> 
+<span class="line-number"> 24</span>     <span class="sql-keyword">drop</span> <span class="sql-keyword">table</span> <span class="sql-identifier">DiscussionMessage</span>;
+<span class="line-number"> 25</span> 
+<span class="line-number"> 26</span>     <span class="sql-keyword">drop</span> <span class="sql-keyword">table</span> <span class="sql-identifier">Product</span>;
+<span class="line-number"> 27</span> 
+<span class="line-number"> 28</span>     <span class="sql-keyword">drop</span> <span class="sql-keyword">table</span> <span class="sql-identifier">UserGroup</span>;
+<span class="line-number"> 29</span> 
+<span class="line-number"> 30</span>     <span class="sql-keyword">create</span> <span class="sql-keyword">table</span> <span class="sql-identifier">BariCase</span> (
+<span class="line-number"> 31</span>         <span class="sql-identifier">id</span> <span class="sql-identifier">b</span><span class="sql-identifier">igint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span> <span class="sql-keyword">generated</span> <span class="sql-identifier">always</span> <span class="sql-keyword">as</span> <span class="sql-keyword">identity</span>,
+<span class="line-number"> 32</span>         <span class="sql-identifier">caseStatus</span> <span class="sql-keyword">varchar</span>(15) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 33</span>         <span class="sql-identifier">conclusion</span> <span class="sql-keyword">varchar</span>(400),
+<span class="line-number"> 34</span>         <span class="sql-identifier">created</span> <span class="sql-keyword">timestamp</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 35</span>         <span class="sql-identifier">descriptio</span><span class="sql-identifier">n</span> <span class="sql-keyword">varchar</span>(400) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 36</span>         <span class="sql-identifier">devStatus</span> <span class="sql-keyword">varchar</span>(15) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 37</span>         <span class="sql-identifier">finished</span> <span class="sql-keyword">timestamp</span>,
+<span class="line-number"> 38</span>         <span class="sql-identifier">title</span> <span class="sql-keyword">varchar</span>(50) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 39</span>         <span class="sql-keyword">type</span> <span class="sql-keyword">varchar</span>(10) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 40</span>         <span class="sql-identifier">version</span> <span class="sql-keyword">integer</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 41</span>         <span class="sql-identifier">bariUser_id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 42</span>         <span class="sql-identifier">product_id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 43</span>         <span class="sql-keyword">primary</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">id</span>)
+<span class="line-number"> 44</span>     );
+<span class="line-number"> 45</span> 
+<span class="line-number"> 46</span>     <span class="sql-keyword">create</span> <span class="sql-keyword">table</span> <span class="sql-identifier">BariUser</span> (
+<span class="line-number"> 47</span>         <span class="sql-identifier">id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span> <span class="sql-keyword">generated</span> <span class="sql-identifier">always</span> <span class="sql-keyword">as</span> <span class="sql-keyword">identity</span>,
+<span class="line-number"> 48</span>         <span class="sql-identifier">fullname</span> <span class="sql-keyword">varchar</span>(50) <span class="sql-keyword">not</span> <span class="sql-keyword">nu</span><span class="sql-keyword">ll</span>,
+<span class="line-number"> 49</span>         <span class="sql-identifier">login</span> <span class="sql-keyword">varchar</span>(20) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span> <span class="sql-keyword">unique</span>,
+<span class="line-number"> 50</span>         <span class="sql-identifier">password</span> <span class="sql-keyword">varchar</span>(20) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 51</span>         <span class="sql-identifier">userRole</span> <span class="sql-keyword">varchar</span>(10) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 52</span>         <span class="sql-identifier">version</span> <span class="sql-keyword">integer</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 53</span>         <span class="sql-keyword">primary</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">id</span>)
+<span class="line-number"> 54</span>     );
+<span class="line-number"> 55</span> 
+<span class="line-number"> 56</span>     <span class="sql-keyword">create</span> <span class="sql-keyword">table</span> <span class="sql-identifier">DiscussionMessage</span> (
+<span class="line-number"> 57</span>         <span class="sql-identifier">id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span> <span class="sql-keyword">generated</span> <span class="sql-identifier">always</span> <span class="sql-keyword">as</span> <span class="sql-keyword">identity</span>,
+<span class="line-number"> 58</span>         <span class="sql-identifier">created</span> <span class="sql-keyword">timestamp</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 59</span>         <span class="sql-identifier">message</span> <span class="sql-keyword">varchar</span>(400) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 60</span>         <span class="sql-identifier">version</span> <span class="sql-keyword">integer</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 61</span>         <span class="sql-identifier">bariCase_id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 62</span>         <span class="sql-identifier">bariUser_i</span><span class="sql-identifier">d</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 63</span>         <span class="sql-keyword">primary</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">id</span>)
+<span class="line-number"> 64</span>     );
+<span class="line-number"> 65</span> 
+<span class="line-number"> 66</span>     <span class="sql-keyword">create</span> <span class="sql-keyword">table</span> <span class="sql-identifier">Product</span> (
+<span class="line-number"> 67</span>         <span class="sql-identifier">id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span> <span class="sql-keyword">generated</span> <span class="sql-identifier">always</span> <span class="sql-keyword">as</span> <span class="sql-keyword">identity</span>,
+<span class="line-number"> 68</span>         <span class="sql-keyword">nam</span><span class="sql-keyword">e</span> <span class="sql-keyword">varchar</span>(50) <span class="sql-keyword">not</span> <span class="sql-keyword">null</span> <span class="sql-keyword">unique</span>,
+<span class="line-number"> 69</span>         <span class="sql-identifier">version</span> <span class="sql-keyword">integer</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 70</span>         <span class="sql-keyword">primary</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">id</span>)
+<span class="line-number"> 71</span>     );
+<span class="line-number"> 72</span> 
+<span class="line-number"> 73</span>     <span class="sql-keyword">create</span> <span class="sql-keyword">table</span> <span class="sql-identifier">UserGroup</span> (
+<span class="line-number"> 74</span>         <span class="sql-identifier">id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span> <span class="sql-keyword">gener</span><span class="sql-keyword">ated</span> <span class="sql-identifier">always</span> <span class="sql-keyword">as</span> <span class="sql-keyword">identity</span>,
+<span class="line-number"> 75</span>         <span class="sql-identifier">version</span> <span class="sql-keyword">integer</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 76</span>         <span class="sql-identifier">bariUser_id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 77</span>         <span class="sql-identifier">product_id</span> <span class="sql-identifier">bigint</span> <span class="sql-keyword">not</span> <span class="sql-keyword">null</span>,
+<span class="line-number"> 78</span>         <span class="sql-keyword">primary</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">id</span>),
+<span class="line-number"> 79</span>         <span class="sql-keyword">unique</span> (<span class="sql-identifier">bariUser_id</span>, <span class="sql-identifier">product_id</span>)
+<span class="line-number"> 80</span>     );
+<span class="line-number"> 81</span> 
+<span class="line-number"> 82</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">BariCase</span> 
+<span class="line-number"> 83</span>         <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_baricase_to_product</span> 
+<span class="line-number"> 84</span>         <span class="sql-keyword">foreign</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">product_id</span>) 
+<span class="line-number"> 85</span>         <span class="sql-keyword">references</span> <span class="sql-identifier">Product</span>;
+<span class="line-number"> 86</span> 
+<span class="line-number"> 87</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">BariCase</span> 
+<span class="line-number"> 88</span>         <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_baricase_to_bariuser</span> 
+<span class="line-number"> 89</span>         <span class="sql-keyword">foreign</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">bariUser_id</span>) 
+<span class="line-number"> 90</span>         <span class="sql-keyword">references</span> <span class="sql-identifier">BariUser</span>;
+<span class="line-number"> 91</span> 
+<span class="line-number"> 92</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">DiscussionMessage</span> 
+<span class="line-number"> 93</span>         <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_discussionmessage_to_baricase</span> 
+<span class="line-number"> 94</span>         <span class="sql-keyword">foreign</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">bariCase_id</span>) 
+<span class="line-number"> 95</span>         <span class="sql-keyword">references</span> <span class="sql-identifier">BariCase</span>;
+<span class="line-number"> 96</span> 
+<span class="line-number"> 97</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">DiscussionMessage</span> 
+<span class="line-number"> 98</span>         <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_discussiommessage_to_bariuser</span> 
+<span class="line-number"> 99</span>         <span class="sql-keyword">foreign</span> <span class="sql-keyword">key</span> (<span class="sql-identifier">bariUser_id</span>) 
+<span class="line-number">100</span>         <span class="sql-keyword">references</span> <span class="sql-identifier">BariUser</span>;
+<span class="line-number">101</span> 
+<span class="line-number">102</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">UserGroup</span> 
+<span class="line-number">103</span>         <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_usergroup_to_product</span> 
+<span class="line-number">104</span>         <span class="sql-keyword">foreign</span> <span class="sql-keyword">ke</span><span class="sql-keyword">y</span> (<span class="sql-identifier">product_id</span>) 
+<span class="line-number">105</span>         <span class="sql-keyword">references</span> <span class="sql-identifier">Product</span>;
+<span class="line-number">106</span> 
+<span class="line-number">107</span>     <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">UserGroup</span> 
+<span class="line-number">108</span>         <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">fk_from_usergroup_to_bariuser</span> 
+<span class="line-number">109</span>         <span class="sql-keyword">foreign</span> <span class="sql-keyword">ke</span><span class="sql-keyword">y</span> (<span class="sql-identifier">bariUser_id</span>) 
+<span class="line-number">110</span>         <span class="sql-keyword">references</span> <span class="sql-identifier">BariUser</span>;
+<span class="line-number">111</span> 
+<span class="line-number">112</span> 
+</pre></body>
+</html>

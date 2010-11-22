@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>bari_init.sql</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.sql-block-comment {color: #969696}
+.line-number {background-color: #e9e8e2}
+.sql-identifier {color: #009900}
+.sql-string-literal {color: #ce7b00}
+.sql-keyword {color: #0000e6}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">C:\GoogleCode\bari\Bari\bari_init.sql</td></tr></table>
+<pre>
+<span class="line-number"> 1</span> <span class="sql-block-comment">-- Extra constrains</span>
+<span class="line-number"> 2</span> <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">bariuser</span>
+<span class="line-number"> 3</span> <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">valid_user_roles</span>
+<span class="line-number"> 4</span> <span class="sql-keyword">check</span> (<span class="sql-identifier">userrole</span> <span class="sql-keyword">in</span> (<span class="sql-string-literal">&#39;ADMIN&#39;</span>, <span class="sql-string-literal">&#39;DEVELOPER&#39;</span>, <span class="sql-string-literal">&#39;NORMAL&#39;</span>));
+<span class="line-number"> 5</span> 
+<span class="line-number"> 6</span> <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">bariuser</span>
+<span class="line-number"> 7</span> <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">password_length_ge_3</span>
+<span class="line-number"> 8</span> <span class="sql-keyword">check</span> (<span class="sql-keyword">length</span>(<span class="sql-identifier">password</span>) &gt;= 3);
+<span class="line-number"> 9</span> 
+<span class="line-number">10</span> <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">baricase</span>
+<span class="line-number">11</span> <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">valid_type</span>
+<span class="line-number">12</span> <span class="sql-keyword">check</span> (<span class="sql-keyword">type</span> <span class="sql-keyword">i</span><span class="sql-keyword">n</span> (<span class="sql-string-literal">&#39;ERROR&#39;</span>, <span class="sql-string-literal">&#39;REQUEST&#39;</span>));
+<span class="line-number">13</span> 
+<span class="line-number">14</span> <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">baricase</span>
+<span class="line-number">15</span> <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">valid_dev_stauts</span>
+<span class="line-number">16</span> <span class="sql-keyword">check</span> (<span class="sql-identifier">devstatus</span> <span class="sql-keyword">in</span> (<span class="sql-string-literal">&#39;NOTSTARTED&#39;</span>, <span class="sql-string-literal">&#39;STARTED&#39;</span>, <span class="sql-string-literal">&#39;READYTOTEST&#39;</span>, <span class="sql-string-literal">&#39;TESTED&#39;</span>,
+<span class="line-number">17</span> <span class="sql-string-literal">&#39;IN</span><span class="sql-string-literal">PRODUCTION&#39;</span>));
+<span class="line-number">18</span> 
+<span class="line-number">19</span> <span class="sql-keyword">alter</span> <span class="sql-keyword">table</span> <span class="sql-identifier">baricase</span>
+<span class="line-number">20</span> <span class="sql-keyword">add</span> <span class="sql-keyword">constraint</span> <span class="sql-identifier">valid_case_stauts</span>
+<span class="line-number">21</span> <span class="sql-keyword">check</span> (<span class="sql-identifier">casestatus</span> <span class="sql-keyword">in</span> (<span class="sql-string-literal">&#39;NEW&#39;</span>, <span class="sql-string-literal">&#39;CONSIDERING&#39;</span>, <span class="sql-string-literal">&#39;APPROVED&#39;</span>, <span class="sql-string-literal">&#39;REJECTED&#39;</span>,
+<span class="line-number">22</span> <span class="sql-string-literal">&#39;DONE</span><span class="sql-string-literal">&#39;</span>));
+<span class="line-number">23</span> 
+<span class="line-number">24</span> <span class="sql-block-comment">-- Initialize database with some bari users.</span>
+<span class="line-number">25</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">bariuser</span>
+<span class="line-number">26</span> (<span class="sql-identifier">fullname</span>, <span class="sql-identifier">login</span>, <span class="sql-identifier">password</span>, <span class="sql-identifier">userrole</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">27</span> <span class="sql-keyword">values</span> (<span class="sql-string-literal">&#39;Jan S</span><span class="sql-string-literal">chrøder Hansen&#39;</span>, <span class="sql-string-literal">&#39;jsh&#39;</span>, <span class="sql-string-literal">&#39;jsh&#39;</span>, <span class="sql-string-literal">&#39;ADMIN&#39;</span>, 1);
+<span class="line-number">28</span> 
+<span class="line-number">29</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">bariuser</span>
+<span class="line-number">30</span> (<span class="sql-identifier">fullname</span>, <span class="sql-identifier">login</span>, <span class="sql-identifier">password</span>, <span class="sql-identifier">userrole</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">31</span> <span class="sql-keyword">values</span> (<span class="sql-string-literal">&#39;Kaj Kode Nørd&#39;</span>, <span class="sql-string-literal">&#39;kkn&#39;</span>, <span class="sql-string-literal">&#39;kkn&#39;</span>, <span class="sql-string-literal">&#39;DEVELOPER&#39;</span>, 1);
+<span class="line-number">32</span> 
+<span class="line-number">33</span> <span class="sql-keyword">in</span><span class="sql-keyword">sert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">bariuser</span>
+<span class="line-number">34</span> (<span class="sql-identifier">fullname</span>, <span class="sql-identifier">login</span>, <span class="sql-identifier">password</span>, <span class="sql-identifier">userrole</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">35</span> <span class="sql-keyword">values</span> (<span class="sql-string-literal">&#39;Tanja Kikkenborg&#39;</span>, <span class="sql-string-literal">&#39;tki&#39;</span>, <span class="sql-string-literal">&#39;tki&#39;</span>, <span class="sql-string-literal">&#39;NORMAL&#39;</span>, 1);
+<span class="line-number">36</span> 
+<span class="line-number">37</span> <span class="sql-block-comment">-- Add some products and</span><span class="sql-block-comment"> user groups</span>
+<span class="line-number">38</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">product</span>
+<span class="line-number">39</span> (<span class="sql-keyword">name</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">40</span> <span class="sql-keyword">values</span> (<span class="sql-string-literal">&#39;BaRI&#39;</span>, 1);
+<span class="line-number">41</span> 
+<span class="line-number">42</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">product</span>
+<span class="line-number">43</span> (<span class="sql-keyword">name</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">44</span> <span class="sql-keyword">values</span> (<span class="sql-string-literal">&#39;Hibernate&#39;</span>, 1);
+<span class="line-number">45</span> 
+<span class="line-number">46</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">in</span><span class="sql-keyword">to</span> <span class="sql-identifier">product</span>
+<span class="line-number">47</span> (<span class="sql-keyword">name</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">48</span> <span class="sql-keyword">values</span> (<span class="sql-string-literal">&#39;Wicket&#39;</span>, 1);
+<span class="line-number">49</span> 
+<span class="line-number">50</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">51</span> (<span class="sql-identifier">bariuser_id</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">52</span> <span class="sql-keyword">values</span> (1, 1, 1);
+<span class="line-number">53</span> 
+<span class="line-number">54</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">u</span><span class="sql-identifier">sergroup</span>
+<span class="line-number">55</span> (<span class="sql-identifier">bariuser_id</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">56</span> <span class="sql-keyword">values</span> (1, 2, 1);
+<span class="line-number">57</span> 
+<span class="line-number">58</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">59</span> (<span class="sql-identifier">bariuser_id</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">60</span> <span class="sql-keyword">values</span> (1, 3, 1);
+<span class="line-number">61</span> 
+<span class="line-number">62</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">63</span> (<span class="sql-identifier">bariuser_id</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">64</span> <span class="sql-keyword">values</span> (2, 1, 1);
+<span class="line-number">65</span> 
+<span class="line-number">66</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">67</span> (<span class="sql-identifier">bariuser_id</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">ver</span><span class="sql-identifier">sion</span>)
+<span class="line-number">68</span> <span class="sql-keyword">values</span> (2, 2, 1);
+<span class="line-number">69</span> 
+<span class="line-number">70</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">71</span> (<span class="sql-identifier">bariuser_id</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">72</span> <span class="sql-keyword">values</span> (2, 3, 1);
+<span class="line-number">73</span> 
+<span class="line-number">74</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">75</span> (<span class="sql-identifier">bariuser_i</span><span class="sql-identifier">d</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">76</span> <span class="sql-keyword">values</span> (3, 1, 1);
+<span class="line-number">77</span> 
+<span class="line-number">78</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">79</span> (<span class="sql-identifier">bariuser_id</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">80</span> <span class="sql-keyword">values</span> (3, 2, 1);
+<span class="line-number">81</span> 
+<span class="line-number">82</span> <span class="sql-keyword">insert</span> <span class="sql-keyword">into</span> <span class="sql-identifier">usergroup</span>
+<span class="line-number">83</span> (<span class="sql-identifier">bariuser_i</span><span class="sql-identifier">d</span>, <span class="sql-identifier">product_id</span>, <span class="sql-identifier">version</span>)
+<span class="line-number">84</span> <span class="sql-keyword">values</span> (3, 3, 1);
+<span class="line-number">85</span> 
+<span class="line-number">86</span> 
+</pre></body>
+</html>
