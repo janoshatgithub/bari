@@ -24,7 +24,7 @@ check (casestatus in ('NEW', 'CONSIDERING', 'APPROVED', 'REJECTED',
 -- Initialize database with some bari users.
 insert into bariuser
 (fullname, login, password, userrole, version)
-values ('Jan Schrøder Hansen', 'jsh', 'jsh', 'ADMIN', 1);
+values ('Jens Sne Hansen', 'jsh', 'jsh', 'ADMIN', 1);
 
 insert into bariuser
 (fullname, login, password, userrole, version)
@@ -32,7 +32,7 @@ values ('Kaj Kode Nørd', 'kkn', 'kkn', 'DEVELOPER', 1);
 
 insert into bariuser
 (fullname, login, password, userrole, version)
-values ('Tanja Kikkenborg', 'tki', 'tki', 'NORMAL', 1);
+values ('Tanja Kageborg', 'tki', 'tki', 'NORMAL', 1);
 
 -- Add some products and user groups
 insert into product
